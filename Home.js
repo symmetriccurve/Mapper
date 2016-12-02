@@ -27,7 +27,7 @@ class Home extends Component {
       distanceRight: new Animated.Value(0),
       markersLeft: new Animated.Value(0),
       markersRight: new Animated.Value(0),
-      scale : new Animated.Value(1)
+      scale : new Animated.Value(0.3)
     };
   }
 
@@ -49,10 +49,17 @@ class Home extends Component {
           Animated.spring(
             this.state.scale,
             {
-              toValue: 0.5,
+              toValue: 1,
             }
           ).start(),
 
+
+          // Animated.spring(
+          //   this.state.areaLeft,
+          //   {
+          //     toValue: 50,
+          //   }
+          // ).start(()=>{})
 
           Animated.spring(
             this.state.distanceRight,
@@ -89,14 +96,15 @@ class Home extends Component {
           Animated.spring(
             this.state.areaLeft,
             {
-              toValue: 0,
+              toValue: 100,
             }
           ).start(()=>{})
 
-          Animated.spring(
+          Animated.timing(
             this.state.distanceRight,
             {
               toValue: width*2,
+              delay:1000000
             }
           ).start(),
 
@@ -104,7 +112,6 @@ class Home extends Component {
             this.state.markersRight,
             {
               toValue: width*2,
-              delay:0
             }
           ).start(()=>{
             this.props.navigator.push({title:'Distance'}),
@@ -134,7 +141,7 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-            <Animated.View style={{marginLeft:this.state.areaLeft,marginRight:this.state.areaRight,margin:3,flex:1,backgroundColor:'#65D5EF',height:100,width:width,alignItems:'center',justifyContent:'center',shadowOffset:{width: 0, height:0},shadowColor:'black',shadowRadius:1,shadowOpacity:0.5,zIndex:-1}}>
+            <Animated.View style={{transform:[{scale:this.state.scale}],marginLeft:this.state.areaLeft,marginRight:this.state.areaRight,margin:3,flex:1,backgroundColor:'#65D5EF',height:100,width:width,alignItems:'center',justifyContent:'center',shadowOffset:{width: 0, height:0},shadowColor:'black',shadowRadius:1,shadowOpacity:0.5,zIndex:-1}}>
                   <TouchableHighlight underlayColor= 'transparent' style={{flex:1,alignItems:'center',justifyContent:'center',height:100,width:width}} onPress = { ()=>{this._move('area')}}>
                     <Text style={{color:'white',fontSize:40,fontFamily:'AvenirNext-Heavy'}}>Area</Text>
                   </TouchableHighlight>
@@ -160,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'lightgrey'
+    backgroundColor:'lightblue'
   },
   welcome: {
     fontSize: 20,
