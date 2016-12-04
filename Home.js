@@ -167,9 +167,11 @@ class Home extends Component {
   render() {
     return (
       <View style={{flex:1,marginTop:15}}>
-              <View style={{height:70,width:width,backgroundColor:'yellow',flexDirection:'row'}}>
+              <View style={{height:70,width:width,backgroundColor:'lightblue',flexDirection:'row'}}>
                       <TouchableHighlight onPress ={()=>{this._reset()}} style={{height:70,width:width/5,backgroundColor:'coral'}}>
+                        <View>
                           <Animated.View style={{
+                            position:'absolute',
                             transform:[
                               {
                                 rotate:this.state.icon.interpolate({
@@ -184,14 +186,32 @@ class Home extends Component {
                                 })
                               }
                             ],
-
-
-                            height:70,width:width/5,backgroundColor:'transparent',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                            height:70,
+                            width:width/5,backgroundColor:'transparent',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
                               <Icon name="backward" size={30} color="#900"/>
                           </Animated.View>
+                          <Animated.View style={{
+                            transform:[
+                              {
+                                rotate:this.state.icon.interpolate({
+                                    inputRange: [0, 100],
+                                    outputRange: ['180deg','0deg']
+                                })
+                              },
+                              {
+                                scale:this.state.icon.interpolate({
+                                    inputRange: [0, 100],
+                                    outputRange: [1,0]
+                                })
+                              }
+                            ],
+                            height:60,
+                            width:width/5,backgroundColor:'transparent',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                              <Icon name="bitcoin" size={30} color="#900"/>
+                          </Animated.View>
+                         </View>
                       </TouchableHighlight>
                       <Animated.View style={{height:70,
-
                         width:this.state.icon.interpolate({
                             inputRange: [0, 100],
                             outputRange: [0,width-width/5]
