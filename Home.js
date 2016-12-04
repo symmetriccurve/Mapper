@@ -18,8 +18,8 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      area: new Animated.Value(0),
-      distance: new Animated.Value(0),
+      area: new Animated.Value(100),
+      distance: new Animated.Value(100),
       marker: new Animated.Value(0),
     };
   }
@@ -36,37 +36,40 @@ class Home extends Component {
   }
 
   _moveArea = () => {
-    if(this.state.area._value == 0){
-        Animated.spring(
-          this.state.area,
-          {
-            toValue:1
-          }
-        ).start(()=>{
-          this.state.area.setValue(1)
-        })
-    } else {
-
-      Animated.spring(
-        this.state.area,
-        {
-          toValue:0
-        }
-      ).start(()=>{
-        this.state.area.setValue(0)
-      })
-
-    }
+    // if(this.state.area._value == 1){
+    //     Animated.spring(
+    //       this.state.area,
+    //       {
+    //         toValue:2
+    //       }
+    //     ).start(()=>{
+    //       this.state.area.setValue(2)
+    //     })
+    // } else if(this.state.area._value == 2){
+    //   Animated.spring(
+    //     this.state.area,
+    //     {
+    //       toValue:1
+    //     }
+    //   ).start(()=>{
+    //     this.state.area.setValue(1)
+    //   })
+    // }
   }
 
   _moveDistance = () => {
-    if(this.state.distance._value == 0){
+    Animated.spring(
+      this.state.area,
+      {
+        toValue:0
+      }
+    ).start(()=>{this.state.area.setValue(0)})
 
-
+    if(this.state.distance._value == 100){
         Animated.spring(
           this.state.distance,
           {
-            toValue:1
+            toValue:50
           }
         ).start()
 
@@ -111,80 +114,81 @@ class Home extends Component {
     return (
       <View style={{flex:1}}>
               <Animated.View style={{
-              transform:[
-                //
-                // {
-                //   scale:
-                //       this.state.val.interpolate({
-                //           inputRange: [0, 1],
-                //           outputRange: [2, 1]
-                //       })
-                // }
-            ],
-            height:this.state.area.interpolate({
-                inputRange: [0, 1],
-                outputRange: [rowHeight, height/10]
-            }),
-            marginTop:this.state.area.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 0]
-            }),
-            zIndex:2,
-            // marginLeft:20,
-            // marginRight:20,
-            width: width,
-            backgroundColor:'green'
-            }}>
-                    <TouchableHighlight underlayColor = {underlayColor} style={{alignItems:'center',justifyContent:'center'}} onPress = { ()=>{this._moveArea()}}>
-                        <Animated.View style={{
-                          transform:[
-                            {scale:this.state.area.interpolate({
-                              inputRange:[0,1],
-                              outputRange:[1.5,1]
-                            })}
-                          ],
-                          alignItems:'center',justifyContent:'center',backgroundColor:'transparent',height:height/3,width:width/2}}>
-                          <Text style={{color:'white',fontSize:30,fontFamily:'AvenirNext-Heavy'}}>Area</Text>
-                        </Animated.View>
-                    </TouchableHighlight>
+                    height:this.state.area.interpolate({
+                        inputRange: [0, 50, 100],
+                        outputRange: [0,50, 100]
+                    }),
+                    // marginTop:this.state.area.interpolate({
+                    //     inputRange: [0,50, 100],
+                    //     outputRange: [0,1, 2]
+                    // }),
+                    zIndex:2,
+                    width: width,
+                    backgroundColor:'green'
+                  }}>
+
+                        <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+                               <Animated.View style={{
+
+                                 transform:[
+                                   {
+                                     scale:
+                                         this.state.area.interpolate({
+                                             inputRange: [0, 50,100],
+                                             outputRange: [0, 1,1]
+                                         })
+                                   }
+                               ],
+
+                              height:this.state.area.interpolate({
+                                    inputRange: [0, 50, 100],
+                                    outputRange: [0,50, 100]
+                                }),
+                              width:width/2, alignItems:'center',justifyContent:'center',backgroundColor:'blue'}}>
+                              <Text style={{flex:1,color:'white',fontSize:40,textAlign: 'center',marginTop:30,fontFamily:'AvenirNext-Heavy'}}>Area</Text>
+
+                          </Animated.View>
+                      </View>
               </Animated.View>
 
-
+            <TouchableHighlight onPress ={ () =>{this._moveDistance()}}>
               <Animated.View style={{
-              transform:[
-                //
-                // {
-                //   scale:
-                //       this.state.val.interpolate({
-                //           inputRange: [0, 1],
-                //           outputRange: [2, 1]
-                //       })
-                // }
-            ],
-            height:this.state.distance.interpolate({
-                inputRange: [0, 1],
-                outputRange: [rowHeight, height/10]
-            }),
-            zIndex:3,
-            // marginLeft:20,
-            // marginRight:20,
-            width: width,
-            backgroundColor:'lightblue'
-            }}>
-                    <TouchableHighlight underlayColor = {underlayColor} style={{alignItems:'center',justifyContent:'center'}} onPress = { ()=>{this._moveDistance()}}>
-                        <Animated.View style={{
-                          transform:[
-                            {scale:this.state.distance.interpolate({
-                              inputRange:[0,1],
-                              outputRange:[1.5,1]
-                            })}
-                          ],
-                          alignItems:'center',justifyContent:'center',backgroundColor:'transparent',height:height/3,width:width/2}}>
-                          <Text style={{color:'white',fontSize:30,fontFamily:'AvenirNext-Heavy'}}>Distance</Text>
-                        </Animated.View>
-                    </TouchableHighlight>
-              </Animated.View>
+                    height:this.state.distance.interpolate({
+                        inputRange: [0, 50, 100],
+                        outputRange: [0,50, 100]
+                    }),
+                    // marginTop:this.state.area.interpolate({
+                    //     inputRange: [0,50, 100],
+                    //     outputRange: [0,1, 2]
+                    // }),
+                    zIndex:2,
+                    width: width,
+                    backgroundColor:'green'
+                  }}>
 
+                        <View style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress ={ () =>{this._moveDistance()}}>
+                               <Animated.View style={{
+
+                                 transform:[
+                                   {
+                                     scale:
+                                         this.state.distance.interpolate({
+                                             inputRange: [0, 50,100],
+                                             outputRange: [0, 0.5,1]
+                                         })
+                                   }
+                               ],
+
+                              height:this.state.distance.interpolate({
+                                    inputRange: [0, 50, 100],
+                                    outputRange: [0,90, 100]
+                                }),
+                              width:width/2, alignItems:'center',justifyContent:'center',backgroundColor:'blue'}}>
+                              <Text style={{flex:1,color:'white',fontSize:40,textAlign: 'center',marginTop:30,fontFamily:'AvenirNext-Heavy'}}>Distance</Text>
+                          </Animated.View>
+                        </View>
+              </Animated.View>
+            </TouchableHighlight>
 
               <Animated.View style={{
               transform:[
@@ -201,7 +205,7 @@ class Home extends Component {
                 inputRange: [0, 1],
                 outputRange: [rowHeight, height/10]
             }),
-            // marginLeft:20,
+            marginTop:100,
             // marginRight:20,
             zIndex:4,
             width: width,
