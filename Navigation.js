@@ -42,11 +42,15 @@ class Navigation extends Component {
   static NavigationBarRouteMapper = self => ({
 
      LeftButton(route, navigator, index, navState) {
-       return(
-         <TouchableHighlight style={{height:50,width:50,backgroundColor:'yellow',alignItems:'center',justifyContent:'center'}}  onPress = { ()=> {navigator.pop()}}>
-           <Icon name="phone" size={30} color="#900" />
-        </TouchableHighlight>
-       );
+       if(route.title == 'Home') {
+         return <View/>
+       }else {
+         return(
+           <TouchableHighlight style={{height:50,width:50,alignItems:'center',justifyContent:'center'}}  onPress = { ()=> {navigator.pop()}}>
+             <Icon name="backward" size={30} color="white" />
+          </TouchableHighlight>
+         );
+       }
      },
    RightButton(route, navigator, index, navState) {
      return <View/>
@@ -57,11 +61,11 @@ class Navigation extends Component {
      );
    },
    Title(route, navigator, index, navState) {
-     return(
-      <TouchableHighlight>
-        <View style={{backgroundColor:'#EF5350',height:70,width:width,alignItems:'center',justifyContent:'center',shadowOffset:{width: 0, height:1},shadowColor:'black',shadowRadius:2,shadowOpacity:0.5,zIndex:4,marginTop:-20}}><Text style={{color:'white',fontSize:40,fontFamily:'Snell Roundhand',fontWeight:'bold'}}>Mapper</Text></View>
-      </TouchableHighlight>
-     );
+     if(route.title == 'Home'){
+       return <View style={{backgroundColor:'#EF5350',height:70,width:width,alignItems:'center',justifyContent:'center',marginTop:-20}}><Text style={{color:'white',fontSize:40,fontFamily:'Snell Roundhand',fontWeight:'bold'}}>Mapper</Text></View>
+     } else {
+       return <View style={{backgroundColor:'#EF5350',height:70,width:width,alignItems:'center',justifyContent:'center',marginTop:-20}}><Text style={{color:'white',fontSize:40,fontFamily:'Snell Roundhand',fontWeight:'bold'}}>Area</Text></View>
+     }
    }
   });
 
@@ -91,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'coral',
   },
   welcome: {
     fontSize: 20,

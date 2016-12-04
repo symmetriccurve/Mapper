@@ -16,18 +16,15 @@ import {
 } from 'react-native';
 
 var {height, width } = Dimensions.get('window')
+const cardHeight = height/3.35
+const cardWidth = width -20
+const FF = 'AppleSDGothicNeo-Medium'
+const FS = height/13
 class Home extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      areaLeft: new Animated.Value(0),
-      areaRight: new Animated.Value(0),
-      distanceLeft: new Animated.Value(0),
-      distanceRight: new Animated.Value(0),
-      markersLeft: new Animated.Value(0),
-      markersRight: new Animated.Value(0),
-      scale : new Animated.Value(1)
     };
   }
 
@@ -42,125 +39,61 @@ class Home extends Component {
     // ).start();                                // Start the animation
   }
 
-  _move = (type) => {
-    //console.log('Type', type);
-    if( type == 'area'){
-      // Animated.parallel([
-          Animated.spring(
-            this.state.scale,
-            {
-              toValue: 0.5,
-            }
-          ).start(),
-
-
-          Animated.spring(
-            this.state.distanceRight,
-            {
-              toValue: width*2,
-            }
-          ).start(),
-
-          Animated.spring(
-            this.state.markersRight,
-            {
-              toValue: width*2,
-              delay:0
-            }
-          ).start(()=>{
-            this.props.navigator.push({title:'Distance'}),
-            Animated.spring(
-              this.state.areaRight,
-              {
-                toValue: width,
-              }
-            ).start(()=>{
-                this.state.areaRight.setValue(0)
-                this.state.areaLeft.setValue(0)
-                this.state.distanceLeft.setValue(0)
-                this.state.distanceRight.setValue(0)
-                this.state.markersLeft.setValue(0)
-                this.state.markersRight.setValue(0)
-             })
-          });
-
-    } else if(type == 'area') {
-
-          Animated.spring(
-            this.state.areaLeft,
-            {
-              toValue: 0,
-            }
-          ).start(()=>{})
-
-          Animated.spring(
-            this.state.distanceRight,
-            {
-              toValue: width*2,
-            }
-          ).start(),
-
-          Animated.spring(
-            this.state.markersRight,
-            {
-              toValue: width*2,
-              delay:0
-            }
-          ).start(()=>{
-            this.props.navigator.push({title:'Distance'}),
-            Animated.spring(
-              this.state.areaRight,
-              {
-                toValue: width,
-              }
-            ).start(()=>{
-                this.state.areaRight.setValue(0)
-                this.state.areaLeft.setValue(0)
-                this.state.distanceLeft.setValue(0)
-                this.state.distanceRight.setValue(0)
-                this.state.markersLeft.setValue(0)
-                this.state.markersRight.setValue(0)
-             })
-          });
-
-
-    }
-
-
-
-
-  }
-
   render() {
     return (
       <View style={styles.container}>
-            <Animated.View style={{marginLeft:this.state.areaLeft,marginRight:this.state.areaRight,margin:3,flex:1,backgroundColor:'#65D5EF',height:100,width:width,alignItems:'center',justifyContent:'center',shadowOffset:{width: 0, height:0},shadowColor:'black',shadowRadius:1,shadowOpacity:0.5,zIndex:-1}}>
-                  <TouchableHighlight underlayColor= 'transparent' style={{flex:1,alignItems:'center',justifyContent:'center',height:100,width:width}} onPress = { ()=>{this._move('area')}}>
-                    <Text style={{color:'white',fontSize:40,fontFamily:'AvenirNext-Heavy'}}>Area</Text>
-                  </TouchableHighlight>
-            </Animated.View>
-            <Animated.View  style={{marginLeft:this.state.distanceLeft,marginRight:this.state.distanceRight,flex:1,backgroundColor:'#F0A24F',height:100,width:width,alignItems:'center',justifyContent:'center',shadowOffset:{width: 0, height:1},shadowColor:'black',shadowRadius:2,shadowOpacity:0.5,borderRadius: 5,zIndex:-1}}>
-                  <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center',height:100,width:width}} onPress = { ()=>{this._move('distance')}}>
-                    <Text style={{color:'white',fontSize:40,fontFamily:'AvenirNext-Heavy'}}>Distance</Text>
-                  </TouchableHighlight>
-            </Animated.View>
-            <Animated.View  style={{marginLeft:this.state.markersLeft,marginRight:this.state.markersRight,flex:1,backgroundColor:'#44D8C6',height:100,width:width,alignItems:'center',justifyContent:'center',shadowOffset:{width: 0, height:1},shadowColor:'black',shadowRadius:2,shadowOpacity:0.5,borderRadius: 5,zIndex:-1}}>
-                  <TouchableHighlight style={{flex:1,alignItems:'center',justifyContent:'center',height:100,width:width}} onPress = { ()=>{this._move('markers')}}>
-                    <Text style={{color:'white',fontSize:40,fontFamily:'AvenirNext-Heavy'}}>Markers</Text>
-                  </TouchableHighlight>
-            </Animated.View>
+
+
+                <View style={{height:cardHeight}}>
+                    <TouchableHighlight underlayColor= 'transparent'
+                      style={[styles.card,{backgroundColor:'#65D5EF',marginTop:5}]}
+                      onPress = { ()=>{  this.props.navigator.push({title:'Distance'})  }}>
+                        <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Area</Text>
+                    </TouchableHighlight>
+                </View>
+
+
+                <View style={{height:cardHeight}}>
+                    <TouchableHighlight
+                      style={[styles.card,{backgroundColor:'#F0A24F',marginTop:5}]}
+                      onPress = { ()=>{  this.props.navigator.push({title:'Distance'})  }}>
+                          <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Distance</Text>
+                    </TouchableHighlight>
+                </View>
+
+                <View style={{height:cardHeight}}>
+                    <TouchableHighlight
+                      style={[styles.card,{backgroundColor:'#44D8C6',marginTop:5}]}
+                      onPress = { ()=>{  this.props.navigator.push({title:'Distance'})  }}>
+                          <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Markers</Text>
+                    </TouchableHighlight>
+                </View>
+
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  card:{
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    height:50,
+    width:cardWidth,
+    backgroundColor:'#65D5EF',
+    shadowOffset:{width: 0, height:1},
+    shadowColor:'grey',shadowRadius:1,
+    shadowOpacity:0.2,
+    zIndex:3,
+    borderRadius:5
+  },
   container: {
     //position:'absolute',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'lightgrey'
+    backgroundColor:'white'
   },
   welcome: {
     fontSize: 20,

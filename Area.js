@@ -12,11 +12,11 @@ import {
 var {height, width } = Dimensions.get('window')
 
 import Map from 'react-native-maps'
-class Distance extends Component {
+class Area extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Map style={{height:height,width:width,backgroundColor:'yellow'}}/>
+        <View style={{height:height,width:width,backgroundColor:'red'}}/>
       </View>
     );
   }
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'green',
+    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
@@ -42,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = Distance
+module.exports = Area
