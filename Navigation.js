@@ -6,6 +6,7 @@ import {
   Text,
   View,
   MapView,
+  Animated,
   Navigator,
   Dimensions,
   TouchableHighlight
@@ -27,13 +28,13 @@ class Navigation extends Component {
               scene = <Area title={route.title} navigator = {navigator} />
         break;
       case 'Distance':
-              scene =  <Distance title={route.title} navigator = {navigator} />
+              scene =  <Distance title={route.title} navigator = {navigator}/>
         break;
       default:
     }
     //
     return (
-      <View style={{flex:1,marginTop:65}}>
+      <View style={{flex:1,marginTop:0}}>
         {scene}
       </View>
     )
@@ -41,11 +42,13 @@ class Navigation extends Component {
 
   static NavigationBarRouteMapper = self => ({
 
-     LeftButton(route, navigator, index, navState) {
+    LeftButton(route, navigator, index, navState) {
        return(
-         <TouchableHighlight style={{height:50,width:50,backgroundColor:'yellow',alignItems:'center',justifyContent:'center'}}  onPress = { ()=> {navigator.pop()}}>
-           <Icon name="phone" size={30} color="#900" />
-        </TouchableHighlight>
+          <Animated.View style={{height:50,width:50}}>
+             <TouchableHighlight style={{height:50,width:50,backgroundColor:'yellow',alignItems:'center',justifyContent:'center'}}  onPress = { ()=> {navigator.pop()}}>
+               <Icon name="phone" size={30} color="#900" />
+             </TouchableHighlight>
+          </Animated.View>
        );
      },
    RightButton(route, navigator, index, navState) {
@@ -68,7 +71,7 @@ class Navigation extends Component {
   _navigationBar = () => {
     return (
       <Navigator.NavigationBar style={{}}
-       routeMapper={Navigation.NavigationBarRouteMapper(this)}/>
+       routeMapper = { Navigation.NavigationBarRouteMapper(this) }/>
     );
 
          return null;
@@ -78,7 +81,7 @@ class Navigation extends Component {
     return (
       <Navigator
         initialRoute = {{ title: 'Home', index: 0 }}
-        navigationBar={this._navigationBar()}
+        //navigationBar={this._navigationBar()}
         renderScene = {(route, navigator ) => this._renderScene(route, navigator)}
         />
     );

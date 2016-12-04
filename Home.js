@@ -14,6 +14,9 @@ var { height, width } = Dimensions.get('window')
 var rowHeight = height/3.32
 var underlayColor = 'lightgreen'
 var Distance =require('./Distance')
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 class Home extends Component {
 
   constructor(props) {
@@ -22,6 +25,7 @@ class Home extends Component {
       area: new Animated.Value(100),
       distance: new Animated.Value(100),
       marker: new Animated.Value(100),
+      icon: new Animated.Value(0),
     };
   }
 
@@ -46,7 +50,7 @@ class Home extends Component {
   }
 
   _moveArea = () => {
-
+    this._rotateIcon()
     Animated.spring(
       this.state.distance,
       {
@@ -70,6 +74,7 @@ class Home extends Component {
   }
 
   _moveDistance = () => {
+    this._rotateIcon()
     Animated.spring(
       this.state.area,
       {
@@ -94,7 +99,7 @@ class Home extends Component {
   }
 
   _moveMarker = () => {
-
+    this._rotateIcon()
     Animated.spring(
       this.state.area,
       {
@@ -117,8 +122,23 @@ class Home extends Component {
     ).start()
   }
 
-  _reset = () => {
+  _rotateIcon = () => {
 
+    Animated.spring(
+      this.state.icon,
+      {
+        toValue:100
+      }
+    ).start()
+
+  }
+
+  _reset = () => {
+        Animated.spring(
+          this.state.icon,{
+            toValue:0
+          }
+        ).start()
         Animated.spring(
           this.state.area,
           {
@@ -145,45 +165,65 @@ class Home extends Component {
 
   render() {
     return (
-      <View style={{flex:1}}>
-                  <TouchableHighlight onPress ={ () =>{this._moveArea()}}>
-                            <Animated.View style={{
-                                  height:this.state.area.interpolate({
-                                      inputRange: [0, 50, 100],
-                                      outputRange: [0,50, rowHeight]
-                                  }),
-                                  // marginTop:this.state.area.interpolate({
-                                  //     inputRange: [0,50, 100],
-                                  //     outputRange: [0,1, 2]
-                                  // }),
-                                  zIndex:2,
-                                  width: width,
-                                  backgroundColor:'green'
-                                }}>
+      <View style={{flex:1,marginTop:15}}>
+              <View style={{height:70,width:width,backgroundColor:'yellow',flexDirection:'row'}}>
+                      <TouchableHighlight onPress ={()=>{this._reset()}} style={{height:70,width:width/3,backgroundColor:'coral'}}>
+                          <Animated.View style={{
+                            transform:[
+                              {
+                                rotate:this.state.icon.interpolate({
+                                    inputRange: [0, 100],
+                                    outputRange: ['180deg','0deg']
+                                })
+                              }
+                            ],
 
-                                      <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-                                          <Animated.View style={{
 
-                                               transform:[
-                                                 {
-                                                   scale:
-                                                       this.state.area.interpolate({
-                                                           inputRange: [0, 50,100],
-                                                           outputRange: [0, 0.5,1]
-                                                       })
-                                                 }
-                                             ],
+                            height:70,width:width/3,backgroundColor:'transparent',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                              <Icon name="backward" size={30} color="#900" />
+                          </Animated.View>
+                      </TouchableHighlight>
+                      <View style={{height:70,width:width/3,backgroundColor:'lightyellow',flexDirection:'row'}}/>
+                      <View style={{height:70,width:width/3,backgroundColor:'lightblue',flexDirection:'row'}}/>
+              </View>
+              <TouchableHighlight onPress ={ () =>{this._moveArea()}}>
+                        <Animated.View style={{
+                              height:this.state.area.interpolate({
+                                  inputRange: [0, 50, 100],
+                                  outputRange: [0,50, rowHeight]
+                              }),
+                              // marginTop:this.state.area.interpolate({
+                              //     inputRange: [0,50, 100],
+                              //     outputRange: [0,1, 2]
+                              // }),
+                              zIndex:2,
+                              width: width,
+                              backgroundColor:'green'
+                            }}>
 
-                                            height:this.state.area.interpolate({
-                                                  inputRange: [0, 50, 100],
-                                                  outputRange: [0,90, rowHeight]
-                                              }),
-                                            width:width/2, alignItems:'center',justifyContent:'center'}}>
-                                            <Text style={{flex:1,color:'white',fontSize:40,textAlign: 'center',marginTop:50,fontFamily:'AvenirNext-Heavy'}}>Area</Text>
-                                        </Animated.View>
-                                      </View>
-                            </Animated.View>
-                </TouchableHighlight>
+                                  <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+                                      <Animated.View style={{
+
+                                           transform:[
+                                             {
+                                               scale:
+                                                   this.state.area.interpolate({
+                                                       inputRange: [0, 50,100],
+                                                       outputRange: [0, 0.5,1]
+                                                   })
+                                             }
+                                         ],
+
+                                        height:this.state.area.interpolate({
+                                              inputRange: [0, 50, 100],
+                                              outputRange: [0,90, rowHeight]
+                                          }),
+                                        width:width/2, alignItems:'center',justifyContent:'center'}}>
+                                        <Text style={{flex:1,color:'white',fontSize:40,textAlign: 'center',marginTop:50,fontFamily:'AvenirNext-Heavy'}}>Area</Text>
+                                    </Animated.View>
+                                  </View>
+                        </Animated.View>
+            </TouchableHighlight>
 
             <TouchableHighlight onPress ={ () =>{this._moveDistance()}}>
                     <Animated.View style={{
@@ -191,10 +231,6 @@ class Home extends Component {
                               inputRange: [0, 50, 100],
                               outputRange: [0,50, rowHeight]
                           }),
-                          // marginTop:this.state.area.interpolate({
-                          //     inputRange: [0,50, 100],
-                          //     outputRange: [0,1, 2]
-                          // }),
                           zIndex:2,
                           width: width,
                           backgroundColor:'blue'
@@ -262,12 +298,11 @@ class Home extends Component {
                       </Animated.View>
           </TouchableHighlight>
 
-              <TouchableHighlight style={{height:50,width:width,backgroundColor:'tan'}} onPress = { ()=> {this._reset()}}>
-                <View>
-
-                  <Distance/>
-                </View>
-              </TouchableHighlight>
+          <TouchableHighlight style={{height:50,width:width,backgroundColor:'tan'}} onPress = { ()=> {this._reset()}}>
+            <View>
+              <Distance/>
+            </View>
+          </TouchableHighlight>
       </View>
     );
   }
