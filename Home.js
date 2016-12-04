@@ -207,7 +207,7 @@ class Home extends Component {
                             ],
                             height:60,
                             width:width/5,backgroundColor:'transparent',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                              <Icon name="bitcoin" size={30} color="#900"/>
+                              <Icon name="users" size={30} color="#900"/>
                           </Animated.View>
                          </View>
                       </TouchableHighlight>
@@ -308,7 +308,7 @@ class Home extends Component {
                             // }),
                             zIndex:2,
                             width: width,
-                            backgroundColor:'coral'
+                            backgroundColor:'lightblue'
                           }}>
 
                             <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
