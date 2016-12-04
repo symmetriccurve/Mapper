@@ -6,7 +6,8 @@ import {
   View,
   Animated,
   Dimensions,
-  TouchableHighlight
+  TouchableHighlight,
+  TextInput
 } from 'react-native';
 
 var { height, width } = Dimensions.get('window')
@@ -167,7 +168,7 @@ class Home extends Component {
     return (
       <View style={{flex:1,marginTop:15}}>
               <View style={{height:70,width:width,backgroundColor:'yellow',flexDirection:'row'}}>
-                      <TouchableHighlight onPress ={()=>{this._reset()}} style={{height:70,width:width/3,backgroundColor:'coral'}}>
+                      <TouchableHighlight onPress ={()=>{this._reset()}} style={{height:70,width:width/5,backgroundColor:'coral'}}>
                           <Animated.View style={{
                             transform:[
                               {
@@ -175,16 +176,32 @@ class Home extends Component {
                                     inputRange: [0, 100],
                                     outputRange: ['180deg','0deg']
                                 })
+                              },
+                              {
+                                scale:this.state.icon.interpolate({
+                                    inputRange: [0, 100],
+                                    outputRange: [0,1]
+                                })
                               }
                             ],
 
 
-                            height:70,width:width/3,backgroundColor:'transparent',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                              <Icon name="backward" size={30} color="#900" />
+                            height:70,width:width/5,backgroundColor:'transparent',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
+                              <Icon name="backward" size={30} color="#900"/>
                           </Animated.View>
                       </TouchableHighlight>
-                      <View style={{height:70,width:width/3,backgroundColor:'lightyellow',flexDirection:'row'}}/>
-                      <View style={{height:70,width:width/3,backgroundColor:'lightblue',flexDirection:'row'}}/>
+                      <Animated.View style={{height:70,
+
+                        width:this.state.icon.interpolate({
+                            inputRange: [0, 100],
+                            outputRange: [0,width-width/5]
+                        }) ,
+
+                        backgroundColor:'lightyellow',alignItems:'center',justifyContent:'center'}}>
+                          <TextInput
+                              placeholder = 'Serach'
+                              style={{height:50,backgroundColor:'violet',borderRadius:25,textAlign:'center',fontFamily:'AvenirNext-Heavy',color:'white'}}/>
+                      </Animated.View>
               </View>
               <TouchableHighlight onPress ={ () =>{this._moveArea()}}>
                         <Animated.View style={{
