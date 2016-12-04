@@ -46,31 +46,25 @@ class Navigation extends Component {
         break;
       default:
     }
-    //
-    return (
-      <View style={{flex:1}}>
-        {scene}
-      </View>
-    )
   }
 
   static NavigationBarRouteMapper = self => ({
 
      LeftButton(route, navigator, index, navState) {
        if(route.title == 'Home') {
-         return <View/>
+         return <View style={{height:height/10,width:50}}/>
        }else {
          return(
-           <TouchableHighlight style={{height:50,width:50,alignItems:'center',justifyContent:'center'}}  onPress = { ()=> {navigator.pop()}}>
+           <TouchableHighlight style={{height:height/10,width:50,alignItems:'center',justifyContent:'center'}}  onPress = { ()=> {navigator.pop()}}>
              <Icon name="backward" size={30} color="white" />
           </TouchableHighlight>
          );
        }
      },
    RightButton(route, navigator, index, navState) {
-     return <View/>
+     return <View style={{height:height/10,width:50}}/>
      return(
-      <TouchableHighlight style={{height:50,width:50}}>
+      <TouchableHighlight style={{height:height/10,width:50}}>
          <View/>
       </TouchableHighlight>
      );
@@ -83,29 +77,30 @@ class Navigation extends Component {
          </View>
        )
      } else {
-       return <View style={{backgroundColor:'#EF5350',height:height/10,width:width,alignItems:'center',justifyContent:'center',marginTop:10}}><Text style={{color:'white',fontSize:40,fontFamily:'Snell Roundhand',fontWeight:'bold'}}>Area</Text></View>
+
+       return(
+         <View style={{backgroundColor:'#EF5350',height:height/10,width:width,alignItems:'center',justifyContent:'center'}}>
+            <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20,marginTop:10}}/>
+         </View>
+       )
      }
    }
   });
 
   _navigationBar = () => {
     return (
-      <Navigator.NavigationBar style={{flex:1,backgroundColor:'#F46C6C'}}
+      <Navigator.NavigationBar style={{flex:1,backgroundColor:'#F46C6C',height:height/8}}
        routeMapper={Navigation.NavigationBarRouteMapper(this)}/>
     );
-
-         return null;
   }
 
   render() {
     return (
-    <View style={{flex:1}}>
       <Navigator
         initialRoute = {{ title: 'Home', index: 0 }}
         navigationBar={this._navigationBar()}
         renderScene = {(route, navigator ) => this._renderScene(route, navigator)}
         />
-    </View>
     );
   }
 }
