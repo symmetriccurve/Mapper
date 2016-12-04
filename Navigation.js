@@ -9,6 +9,7 @@ import {
   MapView,
   Navigator,
   Dimensions,
+  StatusBar,
   TouchableHighlight
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -22,13 +23,26 @@ class Navigation extends Component {
     var scene = <View/>
     switch (route.title) {
       case 'Home':
-            scene = <Home title={route.title} navigator = {navigator} />
+            return (
+              <View>
+                    <StatusBar hidden={false} barStyle = 'light-content' />
+                    <Home title={route.title} navigator = {navigator} />
+              </View>
+            );
         break;
       case 'Area':
-              scene = <Area title={route.title} navigator = {navigator} />
+            return (
+              <View>
+                    <Distance title={route.title} navigator = {navigator} />
+              </View>
+            );
         break;
       case 'Distance':
-              scene =  <Distance title={route.title} navigator = {navigator} />
+            return (
+              <View>
+                    <Distance title={route.title} navigator = {navigator} />
+              </View>
+            );
         break;
       default:
     }
