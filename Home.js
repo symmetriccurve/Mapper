@@ -36,7 +36,16 @@ class Home extends Component {
       {
         toValue:1
       }
-    ).start()
+    ).start(()=>{
+      Animated.spring(
+        this.state.val,
+        {
+          toValue:0
+        }
+      ).start()
+    })
+
+
   }
 
   render() {
@@ -50,22 +59,28 @@ class Home extends Component {
                   scale:
                       this.state.val.interpolate({
                           inputRange: [0, 1],
-                          outputRange: [1, 0.5]
+                          outputRange: [3, 1]
                       })
                 }
             ],
-            height:height/5,
+            // height:this.state.val.interpolate({
+            //     inputRange: [0, 1],
+            //     outputRange: [height/3, height/10]
+            // }),
             marginTop:this.state.val.interpolate({
                 inputRange: [0, 1],
-                outputRange: [0, -height/24]
+                outputRange: [100, 0]
             }),
-            marginLeft:20,
-            marginRight:20,
-            width: width -40,
+            // marginLeft:20,
+            // marginRight:20,
+            width: this.state.val.interpolate({
+                inputRange: [0, 1],
+                outputRange: [width, width]
+            }),
             backgroundColor:'green'
             }}>
-                    <TouchableHighlight underlayColor= 'transparent' style={{width: width - 40,height:height/5,alignItems:'center',justifyContent:'center'}} onPress = { ()=>{this._move()}}>
-                      <Text style={{color:'white',fontSize:40,fontFamily:'AvenirNext-Heavy'}}>Area</Text>
+                    <TouchableHighlight underlayColor= 'transparent' style={{alignItems:'center',justifyContent:'center'}} onPress = { ()=>{this._move()}}>
+                      <Text style={{color:'white',fontSize:30,fontFamily:'AvenirNext-Heavy'}}>Area</Text>
                     </TouchableHighlight>
               </Animated.View>
               {/*<Animated.View  style={{width:2000,flexDirection:'row',transform:[{scale:this.state.distanceScale}],marginLeft:this.state.distanceLeft,marginRight:this.state.distanceRight,backgroundColor:'#F0A24F',height:100,alignItems:'center',justifyContent:'center',shadowOffset:{width: 0, height:1},shadowColor:'black',shadowRadius:2,shadowOpacity:0.5,borderRadius: 5,zIndex:-1}}>
