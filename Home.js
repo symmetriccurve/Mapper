@@ -166,9 +166,10 @@ class Home extends Component {
 
   render() {
     return (
-      <View style={{flex:1,marginTop:15}}>
-              <View style={{height:70,width:width,backgroundColor:'lightblue',flexDirection:'row'}}>
-                      <TouchableHighlight onPress ={()=>{this._reset()}} style={{height:70,width:width/5,backgroundColor:'coral'}}>
+      <View style={{marginTop:15}}>
+          <View style={{height:height/15,width:width,shadowOffset:{width: 0, height:2},shadowColor:'black',shadowRadius:2,shadowOpacity:0.5}}>
+              <View style={{height:height/15,width:width,backgroundColor:'#EF5350',flexDirection:'row'}}>
+                      <TouchableHighlight onPress ={()=>{this._reset()}} style={{height:height/15,width:width/5,backgroundColor:'#550000'}}>
                         <View>
                           <Animated.View style={{
                             position:'absolute',
@@ -186,9 +187,9 @@ class Home extends Component {
                                 })
                               }
                             ],
-                            height:70,
+                            height:height/15,
                             width:width/5,backgroundColor:'transparent',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                              <Icon name="backward" size={30} color="#900"/>
+                              <Icon name="backward" size={20} color="white"/>
                           </Animated.View>
                           <Animated.View style={{
                             transform:[
@@ -205,37 +206,43 @@ class Home extends Component {
                                 })
                               }
                             ],
-                            height:60,
+                            height:height/15,
                             width:width/5,backgroundColor:'transparent',flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                              <Icon name="users" size={30} color="#900"/>
+                              <Icon name="users" size={20} color="white"/>
                           </Animated.View>
                          </View>
                       </TouchableHighlight>
-                      <Animated.View style={{height:70,
+
+                      {/* Search Bar */}
+                      <Animated.View style={{height:height/15,
                         width:this.state.icon.interpolate({
                             inputRange: [0, 100],
                             outputRange: [0,width-width/5]
                         }) ,
 
-                        backgroundColor:'lightyellow',alignItems:'center',justifyContent:'center'}}>
+                        backgroundColor:'#65D5EF',alignItems:'center',justifyContent:'center'}}>
                           <TextInput
-                              placeholder = 'Serach'
-                              style={{height:50,backgroundColor:'violet',borderRadius:25,textAlign:'center',fontFamily:'AvenirNext-Heavy',color:'white'}}/>
+                              placeholder = 'Search'
+                              style={{height:height/15,backgroundColor:'white',textAlign:'center',fontFamily:'AvenirNext-Heavy',color:'white'}}/>
                       </Animated.View>
+                      <View style={{width:width,height:height/15,justifyContent:'center'}}>
+                          <Text style={{color:'white',fontSize:20,marginTop:0,fontFamily:'AvenirNext-Heavy',marginLeft:20}}>Mapper</Text>
+                      </View>
               </View>
+        </View>
+
+
+        <View style={{width:width,shadowOffset:{width: 0, height:2},shadowColor:'black',shadowRadius:2,shadowOpacity:0.5,zIndex:5}}>
               <TouchableHighlight onPress ={ () =>{this._moveArea()}}>
                         <Animated.View style={{
                               height:this.state.area.interpolate({
                                   inputRange: [0, 50, 100],
                                   outputRange: [0,50, rowHeight]
                               }),
-                              // marginTop:this.state.area.interpolate({
-                              //     inputRange: [0,50, 100],
-                              //     outputRange: [0,1, 2]
-                              // }),
-                              zIndex:2,
+                             //marginTop:10,
                               width: width,
-                              backgroundColor:'green'
+                              backgroundColor:'#65D5EF',
+                              zIndex:5
                             }}>
 
                                   <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
@@ -261,16 +268,17 @@ class Home extends Component {
                                   </View>
                         </Animated.View>
             </TouchableHighlight>
+       </View>
 
-            <TouchableHighlight onPress ={ () =>{this._moveDistance()}}>
+       <View style={{width:width,shadowOffset:{width: 0, height:2},shadowColor:'black',shadowRadius:2,shadowOpacity:0.5,zIndex:4}}>
+          <TouchableHighlight onPress ={ () =>{this._moveDistance()}}>
                     <Animated.View style={{
                           height:this.state.distance.interpolate({
                               inputRange: [0, 50, 100],
                               outputRange: [0,50, rowHeight]
                           }),
-                          zIndex:2,
                           width: width,
-                          backgroundColor:'blue'
+                          backgroundColor:'#F0A24F'
                         }}>
 
                               <View style={{flex:1,alignItems:'center',justifyContent:'center'}} onPress ={ () =>{this._moveDistance()}}>
@@ -295,7 +303,8 @@ class Home extends Component {
                               </View>
                     </Animated.View>
             </TouchableHighlight>
-
+      </View>
+      <View style={{width:width,shadowOffset:{width: 0, height:2},shadowColor:'black',shadowRadius:2,shadowOpacity:0.5,zIndex:3}}>
             <TouchableHighlight onPress ={ () =>{this._moveMarker()}}>
                       <Animated.View style={{
                             height:this.state.marker.interpolate({
@@ -308,7 +317,7 @@ class Home extends Component {
                             // }),
                             zIndex:2,
                             width: width,
-                            backgroundColor:'lightblue'
+                            backgroundColor:'#44D8C6'
                           }}>
 
                             <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
@@ -334,12 +343,7 @@ class Home extends Component {
                             </View>
                       </Animated.View>
           </TouchableHighlight>
-
-          <TouchableHighlight style={{height:50,width:width,backgroundColor:'tan'}} onPress = { ()=> {this._reset()}}>
-            <View>
-              <Distance/>
-            </View>
-          </TouchableHighlight>
+      </View>
       </View>
     );
   }
