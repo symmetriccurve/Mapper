@@ -16,7 +16,7 @@ class Distance extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Map style={{height:height,width:width,backgroundColor:'yellow'}}/>
+        <Map style={{height:height,width:width}}/>
       </View>
     );
   }

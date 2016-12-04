@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   MapView,
   Navigator,
   Dimensions,
@@ -33,7 +34,7 @@ class Navigation extends Component {
     }
     //
     return (
-      <View style={{flex:1,marginTop:65}}>
+      <View style={{flex:1}}>
         {scene}
       </View>
     )
@@ -55,23 +56,27 @@ class Navigation extends Component {
    RightButton(route, navigator, index, navState) {
      return <View/>
      return(
-      <TouchableHighlight style={{height:50,width:50,backgroundColor:'yellow'}}>
+      <TouchableHighlight style={{height:50,width:50}}>
          <View/>
       </TouchableHighlight>
      );
    },
    Title(route, navigator, index, navState) {
      if(route.title == 'Home'){
-       return <View style={{backgroundColor:'#EF5350',height:70,width:width,alignItems:'center',justifyContent:'center',marginTop:-20}}><Text style={{color:'white',fontSize:40,fontFamily:'Snell Roundhand',fontWeight:'bold'}}>Mapper</Text></View>
+       return(
+         <View style={{backgroundColor:'#EF5350',height:height/10,width:width,alignItems:'center',justifyContent:'center'}}>
+            <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20,marginTop:10}}/>
+         </View>
+       )
      } else {
-       return <View style={{backgroundColor:'#EF5350',height:70,width:width,alignItems:'center',justifyContent:'center',marginTop:-20}}><Text style={{color:'white',fontSize:40,fontFamily:'Snell Roundhand',fontWeight:'bold'}}>Area</Text></View>
+       return <View style={{backgroundColor:'#EF5350',height:height/10,width:width,alignItems:'center',justifyContent:'center',marginTop:10}}><Text style={{color:'white',fontSize:40,fontFamily:'Snell Roundhand',fontWeight:'bold'}}>Area</Text></View>
      }
    }
   });
 
   _navigationBar = () => {
     return (
-      <Navigator.NavigationBar style={{}}
+      <Navigator.NavigationBar style={{flex:1,backgroundColor:'#F46C6C'}}
        routeMapper={Navigation.NavigationBarRouteMapper(this)}/>
     );
 
@@ -80,11 +85,13 @@ class Navigation extends Component {
 
   render() {
     return (
+    <View style={{flex:1}}>
       <Navigator
         initialRoute = {{ title: 'Home', index: 0 }}
         navigationBar={this._navigationBar()}
         renderScene = {(route, navigator ) => this._renderScene(route, navigator)}
         />
+    </View>
     );
   }
 }

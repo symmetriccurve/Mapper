@@ -16,8 +16,11 @@ var Home = require('./Home')
 var Navigation = require('./Navigation')
 export default class Mapper extends Component {
   render() {
+    //return <View style={{flex:1,backgroundColor:'yellow'}}/>
     return (
-      <Navigation/>
+      <View style={{flex:1}}>
+        <Navigation style={{marginTop:-150}}/>
+      </View>
     );
   }
 }
@@ -28,7 +31,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    //backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,

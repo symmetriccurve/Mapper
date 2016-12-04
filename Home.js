@@ -16,8 +16,8 @@ import {
 } from 'react-native';
 
 var {height, width } = Dimensions.get('window')
-const cardHeight = height/3.35
-const cardWidth = width -20
+const cardHeight = height/3.50
+const cardWidth = width - 10
 const FF = 'AppleSDGothicNeo-Medium'
 const FS = height/13
 class Home extends Component {
@@ -46,7 +46,7 @@ class Home extends Component {
 
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight underlayColor= 'transparent'
-                      style={[styles.card,{backgroundColor:'#65D5EF',marginTop:5}]}
+                      style={[styles.card,{backgroundColor:'#65D5EF'}]}
                       onPress = { ()=>{  this.props.navigator.push({title:'Distance'})  }}>
                         <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Area</Text>
                     </TouchableHighlight>
@@ -56,7 +56,7 @@ class Home extends Component {
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight
                       style={[styles.card,{backgroundColor:'#F0A24F',marginTop:5}]}
-                      onPress = { ()=>{  this.props.navigator.push({title:'Distance'})  }}>
+                      onPress = { ()=>{ this.props.navigator.push({title:'Distance'})  }}>
                           <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Distance</Text>
                     </TouchableHighlight>
                 </View>
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
     flex:1,
     alignItems:'center',
     justifyContent:'center',
-    height:50,
     width:cardWidth,
     backgroundColor:'#65D5EF',
     shadowOffset:{width: 0, height:1},
@@ -90,21 +89,11 @@ const styles = StyleSheet.create({
   },
   container: {
     //position:'absolute',
-    flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'white'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+    backgroundColor:'white',
+    marginTop:height/7.4
+  }
 });
 
 module.exports = Home
