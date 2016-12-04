@@ -171,7 +171,7 @@ class Home extends Component {
             width: width,
             backgroundColor:'green'
             }}>
-                    <TouchableHighlight underlayColor= 'transparent' style={{alignItems:'center',justifyContent:'center'}} onPress = { ()=>{this._moveDistance()}}>
+                    <TouchableHighlight underlayColor= 'lightgrey' style={{alignItems:'center',justifyContent:'center'}} onPress = { ()=>{this._moveDistance()}}>
                         <Animated.View style={{
                           transform:[
                             {scale:this.state.distance.interpolate({
