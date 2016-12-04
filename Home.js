@@ -10,6 +10,9 @@ import {
 } from 'react-native';
 
 var { height, width } = Dimensions.get('window')
+
+var rowHeight = height/3.32
+var underlayColor = 'lightgreen'
 class Home extends Component {
 
   constructor(props) {
@@ -58,14 +61,15 @@ class Home extends Component {
 
   _moveDistance = () => {
     if(this.state.distance._value == 0){
+
+
         Animated.spring(
           this.state.distance,
           {
             toValue:1
           }
-        ).start(()=>{
-          this.state.distance.setValue(1)
-        })
+        ).start()
+
     } else {
 
       Animated.spring(
@@ -100,12 +104,10 @@ class Home extends Component {
       ).start(()=>{
         this.state.marker.setValue(0)
       })
-
     }
   }
 
   render() {
-    console.log('height =>', height,'width=>',width);
     return (
       <View style={{flex:1}}>
               <Animated.View style={{
@@ -121,18 +123,19 @@ class Home extends Component {
             ],
             height:this.state.area.interpolate({
                 inputRange: [0, 1],
-                outputRange: [height/3, height/10]
+                outputRange: [rowHeight, height/10]
             }),
             marginTop:this.state.area.interpolate({
                 inputRange: [0, 1],
-                outputRange: [100, 0]
+                outputRange: [0, 0]
             }),
+            zIndex:2,
             // marginLeft:20,
             // marginRight:20,
             width: width,
             backgroundColor:'green'
             }}>
-                    <TouchableHighlight underlayColor= '#eeeeee' style={{alignItems:'center',justifyContent:'center'}} onPress = { ()=>{this._moveArea()}}>
+                    <TouchableHighlight underlayColor = {underlayColor} style={{alignItems:'center',justifyContent:'center'}} onPress = { ()=>{this._moveArea()}}>
                         <Animated.View style={{
                           transform:[
                             {scale:this.state.area.interpolate({
@@ -160,18 +163,15 @@ class Home extends Component {
             ],
             height:this.state.distance.interpolate({
                 inputRange: [0, 1],
-                outputRange: [height/3, height/10]
+                outputRange: [rowHeight, height/10]
             }),
-            marginTop:this.state.distance.interpolate({
-                inputRange: [0, 1],
-                outputRange: [100, 0]
-            }),
+            zIndex:3,
             // marginLeft:20,
             // marginRight:20,
             width: width,
-            backgroundColor:'green'
+            backgroundColor:'lightblue'
             }}>
-                    <TouchableHighlight underlayColor= 'lightgrey' style={{alignItems:'center',justifyContent:'center'}} onPress = { ()=>{this._moveDistance()}}>
+                    <TouchableHighlight underlayColor = {underlayColor} style={{alignItems:'center',justifyContent:'center'}} onPress = { ()=>{this._moveDistance()}}>
                         <Animated.View style={{
                           transform:[
                             {scale:this.state.distance.interpolate({
@@ -199,18 +199,15 @@ class Home extends Component {
             ],
             height:this.state.marker.interpolate({
                 inputRange: [0, 1],
-                outputRange: [height/3, height/10]
-            }),
-            marginTop:this.state.marker.interpolate({
-                inputRange: [0, 1],
-                outputRange: [100, 0]
+                outputRange: [rowHeight, height/10]
             }),
             // marginLeft:20,
             // marginRight:20,
+            zIndex:4,
             width: width,
-            backgroundColor:'green'
+            backgroundColor:'yellow'
             }}>
-                    <TouchableHighlight underlayColor= 'transparent' style={{alignItems:'center',justifyContent:'center'}} onPress = { ()=>{this._moveMarker()}}>
+                    <TouchableHighlight underlayColor = {underlayColor} style={{alignItems:'center',justifyContent:'center'}} onPress = { ()=>{this._moveMarker()}}>
                         <Animated.View style={{
                           transform:[
                             {scale:this.state.marker.interpolate({
