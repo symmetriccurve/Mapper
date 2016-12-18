@@ -47,7 +47,7 @@ class Home extends Component {
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight underlayColor= 'transparent'
                       style={[styles.card,{backgroundColor:'#65D5EF'}]}
-                      onPress = { ()=>{  this.props.navigator.push({title:'Distance'})  }}>
+                      onPress = { ()=>{  this.props.navigator.push({title:'Area'})}}>
                         <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Area</Text>
                     </TouchableHighlight>
                 </View>
@@ -64,7 +64,7 @@ class Home extends Component {
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight
                       style={[styles.card,{backgroundColor:'#44D8C6',marginTop:5}]}
-                      onPress = { ()=>{  this.props.navigator.push({title:'Distance'})  }}>
+                      onPress = { ()=>{  this.props.navigator.push({title:'Markers'})  }}>
                           <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Markers</Text>
                     </TouchableHighlight>
                 </View>

@@ -12,7 +12,7 @@ import {
 var {height, width } = Dimensions.get('window')
 
 import Map from 'react-native-maps'
-class Area extends Component {
+class Markers extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -42,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = Area
+module.exports = Markers

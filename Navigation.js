@@ -16,6 +16,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 var {height, width } = Dimensions.get('window')
 var Home = require('./Home')
 var Distance = require('./Distance')
+var Area = require('./Area')
+var Markers = require('./Markers')
 class Navigation extends Component {
 
   _renderScene = ( route, navigator ) => {
@@ -33,7 +35,7 @@ class Navigation extends Component {
       case 'Area':
             return (
               <View>
-                    <Distance title={route.title} navigator = {navigator} />
+                    <Area title={route.title} navigator = {navigator} />
               </View>
             );
         break;
@@ -44,6 +46,13 @@ class Navigation extends Component {
               </View>
             );
         break;
+        case 'Markers':
+              return (
+                <View>
+                      <Markers title={route.title} navigator = {navigator} />
+                </View>
+              );
+          break;
       default:
     }
   }
