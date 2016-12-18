@@ -35,7 +35,7 @@ class Navigation extends Component {
       case 'Area':
             return (
               <View>
-                    <Area title={route.title} navigator = {navigator} />
+                    <Area title={route.title} navigator = {navigator}/>
               </View>
             );
         break;
@@ -64,8 +64,8 @@ class Navigation extends Component {
          return <View style={{height:height/10,width:50}}/>
        }else {
          return(
-           <TouchableHighlight style={{height:height/10,width:50,alignItems:'center',justifyContent:'center'}}  onPress = { ()=> {navigator.pop()}}>
-             <Icon name="backward" size={30} color="white" />
+           <TouchableHighlight style={{height:height/10,width:50,alignItems:'center',justifyContent:'center'}} underlayColor= 'transparent'  onPress = { ()=> {navigator.pop()}}>
+             <Icon name="backward" size={10} color="white" />
           </TouchableHighlight>
          );
        }
@@ -79,22 +79,30 @@ class Navigation extends Component {
      );
    },
    Title(route, navigator, index, navState) {
-     if(route.title == 'Home'){
-       return(
-         <View style={{backgroundColor:'#EF5350',height:height/10,width:width,alignItems:'center',justifyContent:'center'}}>
-            <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20,marginTop:10}}/>
-         </View>
-       )
-     } else {
-
-       return(
-         <View style={{backgroundColor:'#EF5350',height:height/10,width:width,alignItems:'center',justifyContent:'center'}}>
-            <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20,marginTop:10}}/>
-         </View>
-       )
-     }
+      return self._getTitle(route)
    }
   });
+
+  _getTitle(route){
+    switch (route.title) {
+      case 'Home':
+          return(
+            <View style={{backgroundColor:'#EF5350',height:height/10,width:width,alignItems:'center',justifyContent:'center'}}>
+               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20,marginTop:10}}/>
+            </View>
+          )
+      case 'Area':
+          return(
+            <View style={{backgroundColor:'#00C5F0',height:height/10,width:width,alignItems:'center',justifyContent:'center'}}>
+               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20,marginTop:10}}/>
+            </View>
+          )
+      default:
+
+    }
+
+
+  }
 
   _navigationBar = () => {
     return (
