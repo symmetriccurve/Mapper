@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@turf/turf": "^3.7.0",
     "react": "15.4.1",
     "react-native": "0.38.0",
     "react-native-maps": "^0.11.0",

@@ -12,6 +12,8 @@ import {
 var {height, width } = Dimensions.get('window')
 
 import Map from 'react-native-maps'
+var LatLngToTurf = require('./Utilities/LatLngToTurf')
+
 class Area extends Component {
   render() {
     return (
