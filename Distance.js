@@ -13,10 +13,43 @@ var {height, width } = Dimensions.get('window')
 
 import Map from 'react-native-maps'
 class Distance extends Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+      points:[]
+    }
+  }
+
+  _handleDrag = (cord) =>{
+      this.setState({
+        points:[...this.state.points,cord]
+      })
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Map style={{height:height,width:width}}/>
+        <Map
+           style={{flex:1,height:height,width:width}}
+           ref = { (MapRef)=> {if( MapRef !=null ) { MapRef.fitToElements(true) }} }
+           loadingEnabled = {true}
+           onRegionChangeComplete = {(movedTo) => { this.newRegion = movedTo }}
+           onPanDrag =  {(e) => {this._handleDrag(e.nativeEvent.coordinate)}}
+           animateToRegion = {this._animateToRegion}
+           scrollEnabled = {false}
+           onPress = {(e)=>{(
+              this.props.drawMode &&
+               ( PL || PG || FL || CR || DM ))
+             ? this._handleNewPoint(e.nativeEvent.coordinate)
+             : null
+           }}>
+          <Map.Polyline
+                 coordinates={this.state.points}
+                 strokeColor="#00C5F0"
+                 strokeWidth={5}/>
+
+          </Map>
       </View>
     );
   }
@@ -28,7 +61,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'green',
+    //backgroundColor: 'green',
   },
   welcome: {
     fontSize: 20,
