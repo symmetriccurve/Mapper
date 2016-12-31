@@ -22,23 +22,20 @@ class Navigation extends Component {
 
   _renderScene = ( route, navigator ) => {
     //console.log('route =>',route, ' navigator=>',navigator);
-    var scene = <View/>
+
     switch (route.title) {
       case 'Home':
-            return (
-              <View>
-                    <StatusBar hidden={false} barStyle = 'light-content' />
-                    <Home title={route.title} navigator = {navigator} />
-              </View>
-            );
-        break;
+            return  (
+                <View style={{flex:1,backgroundColor:'white',marginTop:height/10}}>
+                    <Home title={route.title} navigator = {navigator}/>
+                </View>
+            )
       case 'Area':
-            return (
-              <View>
+            return  (
+                <View style={{flex:1,backgroundColor:'white',marginTop:height/10}}>
                     <Area title={route.title} navigator = {navigator}/>
-              </View>
-            );
-        break;
+                </View>
+            )
       case 'Distance':
             return (
               <View>
@@ -70,31 +67,34 @@ class Navigation extends Component {
          );
        }
      },
-   RightButton(route, navigator, index, navState) {
-     return <View style={{height:height/10,width:50}}/>
-     return(
-      <TouchableHighlight style={{height:height/10,width:50}}>
-         <View/>
-      </TouchableHighlight>
-     );
-   },
-   Title(route, navigator, index, navState) {
-      return self._getTitle(route)
-   }
+
+     RightButton(route, navigator, index, navState) {
+       return <View style={{height:height/10,width:50}}/>
+       return(
+        <TouchableHighlight style={{height:height/10,width:50}}>
+           <View/>
+        </TouchableHighlight>
+       );
+     },
+
+     Title(route, navigator, index, navState) {
+        return self._getTitle(route)
+     }
+
   });
 
   _getTitle(route){
     switch (route.title) {
       case 'Home':
           return(
-            <View style={{backgroundColor:'#F46C6C',height:height/8.5,width:width,alignItems:'center',justifyContent:'center'}}>
-               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/17,marginTop:10}}/>
+            <View style={{backgroundColor:'transparent',height:height/20,width:width/4,alignItems:'center',justifyContent:'center',marginTop:10}}>
+               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20}}/>
             </View>
           )
       case 'Area':
           return(
-            <View style={{backgroundColor:'#00C5F0',height:height/8.5,width:width,alignItems:'center',justifyContent:'center'}}>
-               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/18,marginTop:10}}/>
+            <View style={{backgroundColor:'transparent',height:height/20,width:width/4,alignItems:'center',justifyContent:'center',marginTop:10}}>
+               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20}}/>
             </View>
           )
       case 'Distance':
@@ -118,7 +118,7 @@ class Navigation extends Component {
 
   _navigationBar = () => {
     return (
-      <Navigator.NavigationBar style={{flex:1,backgroundColor:'#F46C6C',height:height/8.5}}
+      <Navigator.NavigationBar style={{flex:1,backgroundColor:'#F46C6C',height:height/10}}
        routeMapper={Navigation.NavigationBarRouteMapper(this)}/>
     );
   }

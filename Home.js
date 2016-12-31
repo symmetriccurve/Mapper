@@ -54,7 +54,7 @@ class Home extends Component {
 
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight
-                      style={[styles.card,{backgroundColor:'#F0A24F',marginTop:5}]}
+                      style={[styles.card,{backgroundColor:'#F0A24F'}]}
                       onPress = { ()=>{ this.props.navigator.push({title:'Distance'})  }}>
                           <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Distance</Text>
                     </TouchableHighlight>
@@ -62,7 +62,7 @@ class Home extends Component {
 
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight
-                      style={[styles.card,{backgroundColor:'#44D8C6',marginTop:5}]}
+                      style={[styles.card,{backgroundColor:'#44D8C6'}]}
                       onPress = { ()=>{  this.props.navigator.push({title:'Markers'})  }}>
                           <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Markers</Text>
                     </TouchableHighlight>
@@ -84,14 +84,15 @@ const styles = StyleSheet.create({
     shadowColor:'grey',shadowRadius:1,
     shadowOpacity:0.2,
     zIndex:3,
-    borderRadius:5
+    borderRadius:5,
+    marginTop:5
   },
   container: {
     //position:'absolute',
     // justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor:'white',
-    marginTop:height/7.4
+    //backgroundColor:'white',
+    // marginTop:height/8.5
   }
 });
 
