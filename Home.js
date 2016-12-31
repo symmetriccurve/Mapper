@@ -43,7 +43,6 @@ class Home extends Component {
     return (
       <View style={styles.container}>
 
-
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight underlayColor= 'transparent'
                       style={[styles.card,{backgroundColor:'#65D5EF'}]}

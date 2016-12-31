@@ -87,14 +87,26 @@ class Navigation extends Component {
     switch (route.title) {
       case 'Home':
           return(
-            <View style={{backgroundColor:'#EF5350',height:height/10,width:width,alignItems:'center',justifyContent:'center'}}>
-               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20,marginTop:10}}/>
+            <View style={{backgroundColor:'#F46C6C',height:height/8.5,width:width,alignItems:'center',justifyContent:'center'}}>
+               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/17,marginTop:10}}/>
             </View>
           )
       case 'Area':
           return(
-            <View style={{backgroundColor:'#00C5F0',height:height/10,width:width,alignItems:'center',justifyContent:'center'}}>
-               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20,marginTop:10}}/>
+            <View style={{backgroundColor:'#00C5F0',height:height/8.5,width:width,alignItems:'center',justifyContent:'center'}}>
+               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/18,marginTop:10}}/>
+            </View>
+          )
+      case 'Distance':
+          return(
+            <View style={{backgroundColor:'#00C5F0',height:height/8.5,width:width,alignItems:'center',justifyContent:'center'}}>
+               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/18,marginTop:10}}/>
+            </View>
+          )
+      case 'Markers':
+          return(
+            <View style={{backgroundColor:'#00C5F0',height:height/8.5,width:width,alignItems:'center',justifyContent:'center'}}>
+               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/18,marginTop:10}}/>
             </View>
           )
       default:
@@ -106,7 +118,7 @@ class Navigation extends Component {
 
   _navigationBar = () => {
     return (
-      <Navigator.NavigationBar style={{flex:1,backgroundColor:'#F46C6C',height:height/8}}
+      <Navigator.NavigationBar style={{flex:1,backgroundColor:'#F46C6C',height:height/8.5}}
        routeMapper={Navigation.NavigationBarRouteMapper(this)}/>
     );
   }
