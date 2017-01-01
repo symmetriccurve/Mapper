@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+//https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=AIzaSyAdvT_G38grWe6w2oC3KAjxNVVlozbjlYo
 
 var {height, width } = Dimensions.get('window')
 const FF = 'AppleSDGothicNeo-Medium'
@@ -29,6 +30,9 @@ class Area extends Component {
       area: 0,
       locationString:''
     }
+  }
+
+  componentWillMount() {
   }
 
   _handleDrag = (cord) => {
@@ -58,13 +62,40 @@ class Area extends Component {
       userDrawing:false
     })
   }
+
+  _mapPantoThisLocation = (location) => {
+      // switch (expression) {
+      //   case expression:
+      //
+      //     break;
+      //   default:
+      //
+      // }
+      this.refs.Map.animateToRegion({
+          latitude:location.geometry.location.lat,
+          longitude:location.geometry.location.lng,
+          longitudeDelta:this._getZoomLevel(),
+          latitudeDelta:this._getZoomLevel()
+      },10000)
+  }
+
   _fetchLocationDetails = () => {
     if(this.state.locationString != ''){
-
+      var toSerachLocationURL = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query='+ this.state.locationString + '&key=AIzaSyAdvT_G38grWe6w2oC3KAjxNVVlozbjlYo'
+        fetch(toSerachLocationURL)
+        .then((data) =>{
+            return data.json()
+        })
+        .then((values) =>{
+          console.log('values',values.results);
+          values.results.length ? this._mapPantoThisLocation(values.results[0]) : Alert.alert('InCorrect Location')
+        })
+        .catch((error)=>{
+          console.log('error====>',error);
+        })
     }else {
       Alert.alert('Please Enter Location')
     }
-    console.log('Serach Requested with', this.state.locationString);
   }
 
   _getControls = () => {
@@ -118,7 +149,7 @@ class Area extends Component {
       <Map
          style={{flex:1,height:height/1.38,width:width}}
          mapType = 'hybrid'
-         //ref = { (MapRef)=> {if( MapRef !=null ) { MapRef.fitToElements(true) }} }
+         ref = 'Map'
          //loadingEnabled = {true}
          onPanDrag =  {(e) => {this._handleDrag(e.nativeEvent.coordinate)}}
          onPress =  {(e) => {this._handleDrag(e.nativeEvent.coordinate)}}
