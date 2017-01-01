@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 
 var {height, width } = Dimensions.get('window')
-const cardHeight = height/3.50
+const cardHeight = height/3.35
 const cardWidth = width - 10
 const FF = 'AppleSDGothicNeo-Medium'
 const FS = height/13

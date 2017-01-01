@@ -8,8 +8,11 @@ import {
   Dimensions,
   Animated,
   TouchableHighlight,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 var {height, width } = Dimensions.get('window')
 const FF = 'AppleSDGothicNeo-Medium'
@@ -23,7 +26,8 @@ class Area extends Component {
     this.state = {
       points:[],
       userDrawing: false,
-      area: 0
+      area: 0,
+      locationString:''
     }
   }
 
@@ -54,6 +58,14 @@ class Area extends Component {
       userDrawing:false
     })
   }
+  _fetchLocationDetails = () => {
+    if(this.state.locationString != ''){
+
+    }else {
+      Alert.alert('Please Enter Location')
+    }
+    console.log('Serach Requested with', this.state.locationString);
+  }
 
   _getControls = () => {
     if(!this.state.userDrawing){
@@ -83,12 +95,28 @@ class Area extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
-      <View style={{height:height/12,width:width,backgroundColor:'brown',alignItems:'center',justifyContent:'center'}}>
-
+    <View style={styles.container}>
+      <View style={{height:height/10,width:width,backgroundColor:'#00C5F0',alignItems:'center',justifyContent:'center'}}>
+          <View style={{height:height/15,width:width -width/15,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:height/20,flexDirection:'row'}}>
+              <View>
+                <TextInput
+                    style={{alignItems:'center',justifyContent:'center',height:height/20,width:width/1.3,backgroundColor:'white',fontFamily:'AvenirNext-bold'}}
+                    value = {this.state.locationString}
+                    onChangeText = {(locationString) => {this.setState({locationString})}}
+                    placeholder = 'Search'
+                    keyboardType = 'web-search'
+                    onSubmitEditing = {()=>{this._fetchLocationDetails()}}
+                    />
+              </View>
+              <TouchableHighlight style={{height:height/20,width:width/10,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this.setState({locationString:''})}} underlayColor = 'transparent'>
+                  <View>
+                    {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> :null }
+                  </View>
+              </TouchableHighlight>
+          </View>
       </View>
       <Map
-         style={{flex:1,height:height/1.44,width:width}}
+         style={{flex:1,height:height/1.38,width:width}}
          mapType = 'hybrid'
          //ref = { (MapRef)=> {if( MapRef !=null ) { MapRef.fitToElements(true) }} }
          //loadingEnabled = {true}
