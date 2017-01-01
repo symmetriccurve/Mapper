@@ -42,7 +42,6 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
-
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight underlayColor= 'transparent'
                       style={[styles.card,{backgroundColor:'#65D5EF'}]}
@@ -91,8 +90,7 @@ const styles = StyleSheet.create({
     //position:'absolute',
     // justifyContent: 'center',
     alignItems: 'center',
-    //backgroundColor:'white',
-    // marginTop:height/8.5
+    //backgroundColor:'yellow'
   }
 });
 

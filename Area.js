@@ -25,6 +25,7 @@ exports.examples = [
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=AIzaSyAdvT_G38grWe6w2oC3KAjxNVVlozbjlYo
 
+import turf from '@turf/turf'
 var {height, width } = Dimensions.get('window')
 const FF = 'AppleSDGothicNeo-Medium'
 const FS = height/20
@@ -38,7 +39,8 @@ class Area extends Component {
       points:[],
       userDrawing: false,
       area: 0,
-      locationString:''
+      locationString:'',
+      scrollEnabled: false
     }
   }
 
@@ -47,15 +49,19 @@ class Area extends Component {
 
   _handleDrag = (cord) => {
     if(this.state.userDrawing){
+
+      if(this.state.points.length > 3) {
+        var turfPolygon = LatLngToTurf(this.state.points)
+        var area = turf.area(turfPolygon);
+        console.log('area',area);
+      }
+
       this.setState({
         points:[...this.state.points,cord],
-        area:this.state.points.length
+        area:area
       })
-      if(this.state.points.length > 200 ){
-        this.setState({
-          points:[...this.state.points,this.state.points[0]]
-        })
-      }
+
+
     }
   }
 
@@ -111,6 +117,7 @@ class Area extends Component {
     }
       return 0
   }
+
   _fetchLocationDetails = () => {
     if(this.state.locationString != ''){
       var api = "https://maps.googleapis.com/maps/api/geocode/json?&address="+JSON.stringify(this.state.locationString)
@@ -150,7 +157,7 @@ class Area extends Component {
       return(
         <View style={{flex:1,height:height/13,width:width,backgroundColor:'#00C5F0',flexDirection:'row'}}>
             <View style={{flex:5,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#0aabcf':'#00C5F0',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._handleDraw()}}>
-                <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>{this.state.userDrawing ? this.state.area : 'Draw'}</Text>
+                <Text style={{color:'white',fontSize:FS/2,fontFamily:FF}}>{this.state.userDrawing ? this.state.area + ' Sq miles' : 'Draw'}</Text>
             </View>
             <TouchableHighlight  style={{flex:1,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#0aabcf':'#00C5F0',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._clear()}}>
                 <View>
@@ -195,11 +202,11 @@ class Area extends Component {
   render() {
     return (
     <View style={styles.container}>
-      <View style={{height:height/10,width:width,backgroundColor:'#00C5F0',alignItems:'center',justifyContent:'center'}}>
-          <View style={{height:height/15,width:width -width/15,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:height/20,flexDirection:'row'}}>
+      <View style={{height:height/15,width:width,backgroundColor:'#65D5EF',alignItems:'center',justifyContent:'center'}}>
+          <View style={{height:height/20,width:width -width/15,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:height/20,flexDirection:'row'}}>
               <View>
                 <TextInput
-                    style={{alignItems:'center',justifyContent:'center',height:height/20,width:width/1.3,backgroundColor:'white',fontFamily:'AvenirNext-bold'}}
+                    style={{alignItems:'center',justifyContent:'center',height:height/21,width:width/1.3,backgroundColor:'white',fontFamily:'AvenirNext-bold'}}
                     value = {this.state.locationString}
                     onChangeText = {(locationString) => {this.setState({locationString})}}
                     placeholder = 'Search'
@@ -220,6 +227,7 @@ class Area extends Component {
          mapType = 'hybrid'
          ref = 'Map'
          //loadingEnabled = {true}
+         scrollEnabled = { this.state.scrollEnabled }
          onPanDrag =  {(e) => {this._handleDrag(e.nativeEvent.coordinate)}}
          onPress =  {(e) => {this._handleDrag(e.nativeEvent.coordinate)}}
          //animateToRegion = {this._animateToRegion}
@@ -245,7 +253,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: 'red'
   },
   welcome: {
     fontSize: 20,

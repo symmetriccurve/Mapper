@@ -12,7 +12,7 @@ import {
   StatusBar,
   TouchableHighlight
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 var {height, width } = Dimensions.get('window')
 var Home = require('./Home')
 var Distance = require('./Distance')
@@ -26,26 +26,26 @@ class Navigation extends Component {
     switch (route.title) {
       case 'Home':
             return  (
-                <View style={{flex:1,backgroundColor:'white',marginTop:height/10}}>
+                <View style={{flex:1,backgroundColor:'transparent',marginTop:height/13}}>
                     <Home title={route.title} navigator = {navigator}/>
                 </View>
             )
       case 'Area':
             return  (
-                <View style={{flex:1,backgroundColor:'white',marginTop:height/10}}>
+                <View style={{flex:1,backgroundColor:'transparent',marginTop:height/13}}>
                     <Area title={route.title} navigator = {navigator}/>
                 </View>
             )
       case 'Distance':
             return (
-              <View>
+              <View style={{flex:1,backgroundColor:'green',marginTop:height/12}}>
                     <Distance title={route.title} navigator = {navigator} />
               </View>
             );
         break;
         case 'Markers':
               return (
-                <View>
+                <View style={{flex:1,backgroundColor:'green',marginTop:height/12}}>
                       <Markers title={route.title} navigator = {navigator} />
                 </View>
               );
@@ -57,19 +57,20 @@ class Navigation extends Component {
   static NavigationBarRouteMapper = self => ({
 
      LeftButton(route, navigator, index, navState) {
+       return <View/>
        if(route.title == 'Home') {
          return <View style={{height:height/10,width:50}}/>
        }else {
          return(
-           <TouchableHighlight style={{height:height/10,width:50,alignItems:'center',justifyContent:'center'}} underlayColor= 'transparent'  onPress = { ()=> {navigator.pop()}}>
-             <Icon name="backward" size={10} color="white" />
+           <TouchableHighlight style={{backgroundColor:'blue',height:width/6,width:width/10,alignItems:'center',justifyContent:'center',marginTop:-height/37}} underlayColor= 'transparent'  onPress = { ()=> {navigator.pop()}}>
+             <Icon name="backward" size={40} color="white" />
           </TouchableHighlight>
          );
        }
      },
 
      RightButton(route, navigator, index, navState) {
-       return <View style={{height:height/10,width:50}}/>
+       return <View/>
        return(
         <TouchableHighlight style={{height:height/10,width:50}}>
            <View/>
@@ -78,28 +79,42 @@ class Navigation extends Component {
      },
 
      Title(route, navigator, index, navState) {
-        return self._getTitle(route)
+        return self._getTitle(navigator,route)
      }
 
   });
 
-  _getTitle(route){
+  _getTitle(navigator,route){
     switch (route.title) {
       case 'Home':
           return(
-            <View style={{backgroundColor:'transparent',height:height/20,width:width/4,alignItems:'center',justifyContent:'center',marginTop:10}}>
+            <View style={{backgroundColor:'green',height:height/13,width:width,alignItems:'center',justifyContent:'center',marginTop:-height/37}}>
                <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20}}/>
             </View>
           )
       case 'Area':
           return(
-            <View style={{backgroundColor:'transparent',height:height/20,width:width/4,alignItems:'center',justifyContent:'center',marginTop:10}}>
-               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20}}/>
+            <View style={{backgroundColor:'#00C5F0',height:height/13,width:width,alignItems:'center',justifyContent:'center',marginTop:-height/37,flexDirection:'row'}}>
+
+               <TouchableHighlight style={{flex:1,height:height/15,backgroundColor:'transparent',alignItems:'center',justifyContent:'center'}} onPress = { ()=> {navigator.pop()}} >
+                    <Icon name="keyboard-arrow-left" size={40} color="white" />
+                </TouchableHighlight>
+
+                <View style={{flex:5,height:height/15,backgroundColor:'transparent',alignItems:'center',justifyContent:'center'}}>
+                    <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20}}/>
+                </View>
+
+                <View style={{flex:1,height:height/15,backgroundColor:'transparent'}}>
+                </View>
+
+              {/* <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20}}/>
+               <Icon name="backward" size={40} color="white" />
+               <Icon name="backward" size={40} color="white" /> */}
             </View>
           )
       case 'Distance':
           return(
-            <View style={{backgroundColor:'#00C5F0',height:height/8.5,width:width,alignItems:'center',justifyContent:'center'}}>
+            <View style={{backgroundColor:'#65D5EF',height:height/8.5,width:width,alignItems:'center',justifyContent:'center'}}>
                <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/18,marginTop:10}}/>
             </View>
           )
@@ -118,7 +133,7 @@ class Navigation extends Component {
 
   _navigationBar = () => {
     return (
-      <Navigator.NavigationBar style={{flex:1,backgroundColor:'#F46C6C',height:height/10}}
+      <Navigator.NavigationBar style={{flex:1,backgroundColor:'#F46C6C',height:height/15}}
        routeMapper={Navigation.NavigationBarRouteMapper(this)}/>
     );
   }

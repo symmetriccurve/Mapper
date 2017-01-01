@@ -11,11 +11,7 @@ var Navigation = require('./Navigation')
 export default class Mapper extends Component {
   render() {
     //return <View style={{flex:1,backgroundColor:'yellow'}}/>
-    return (
-      <View style={{flex:1}}>
-        <Navigation style={{marginTop:-150}}/>
-      </View>
-    );
+    return <Navigation/>
   }
 }
 
