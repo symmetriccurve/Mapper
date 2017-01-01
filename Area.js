@@ -9,8 +9,18 @@ import {
   Animated,
   TouchableHighlight,
   TextInput,
-  Alert
+  Alert,
+  Navigator
 } from 'react-native';
+
+exports.examples = [
+  {
+    title: 'navigator.geolocation',
+    render: function(): React.Element<any> {
+      return <Area/>;
+    },
+  }
+];
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=AIzaSyAdvT_G38grWe6w2oC3KAjxNVVlozbjlYo
@@ -79,20 +89,47 @@ class Area extends Component {
       },10000)
   }
 
+  _getZoomLevel = (zoomLevel) =>{
+    console.log('Check this',zoomLevel.geometry.bounds.northeast.lng - zoomLevel.geometry.bounds.southwest.lng);
+    console.log('Check this',zoomLevel.geometry.bounds.northeast.lat - zoomLevel.geometry.bounds.southwest.lat);
+    //const longitudeDelta = Math.abs(se_lng - nw_lng);
+    //const latitudeDelta = Math.abs(se_lat - nw_lat);
+    //types: ["locality","political"]
+    console.log('zoomLevel',zoomLevel);
+    switch (zoomLevel) {
+        case "locality":
+            return 0.7
+        case "country":
+            return 50
+        case "postal_code":
+            return 0.1
+        case "premise":
+        case "street_address":
+            return 0.001
+        default:
+            return 100
+    }
+      return 0
+  }
   _fetchLocationDetails = () => {
     if(this.state.locationString != ''){
-      var toSerachLocationURL = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query='+ this.state.locationString + '&key=AIzaSyAdvT_G38grWe6w2oC3KAjxNVVlozbjlYo'
-        fetch(toSerachLocationURL)
-        .then((data) =>{
-            return data.json()
-        })
-        .then((values) =>{
-          console.log('values',values.results);
-          values.results.length ? this._mapPantoThisLocation(values.results[0]) : Alert.alert('InCorrect Location')
-        })
-        .catch((error)=>{
-          console.log('error====>',error);
-        })
+      var api = "https://maps.googleapis.com/maps/api/geocode/json?&address="+JSON.stringify(this.state.locationString)
+      fetch(api)
+        .then((response) => {return response.json()})
+        .then((responseData) => {
+
+            if(responseData.results.length){
+                console.log('responseData.results[0]',responseData.results[0]);
+                console.log('latitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
+                console.log('longitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
+                this.refs.Map.animateToRegion({
+                    latitude: responseData.results[0].geometry.location.lat,
+                    longitude: responseData.results[0].geometry.location.lng,
+                    latitudeDelta: responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat,
+                    longitudeDelta: responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat
+                },500);
+            }
+          })
     }else {
       Alert.alert('Please Enter Location')
     }
@@ -124,6 +161,37 @@ class Area extends Component {
       )
     }
   }
+
+  _locateORClear = () => {
+    if(this.state.locationString == '') {
+      this.refs.searchBar.blur()
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.refs.Map.animateToRegion(
+            {
+              latitudeDelta : 0.0001,
+              longitudeDelta : 0.0001,
+              latitude : position.coords.latitude,
+              longitude : position.coords.longitude
+            } , 500 )
+        },
+        (error) => alert(JSON.stringify(error)),
+        // params Support only for Android
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      );
+    } else {
+        this.setState({locationString:''})
+        this.refs.searchBar.focus()
+    }
+    //console.log('SearchBar', );
+    // this.refs.Map.animateToRegion({
+    //     latitude: 0,
+    //     longitude: 0,
+    //     latitudeDelta: 120,
+    //     longitudeDelta: 140
+    // },500);
+  }
+
   render() {
     return (
     <View style={styles.container}>
@@ -137,11 +205,12 @@ class Area extends Component {
                     placeholder = 'Search'
                     keyboardType = 'web-search'
                     onSubmitEditing = {()=>{this._fetchLocationDetails()}}
+                    ref = 'searchBar'
                     />
               </View>
-              <TouchableHighlight style={{height:height/20,width:width/10,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this.setState({locationString:''})}} underlayColor = 'transparent'>
+              <TouchableHighlight style={{height:height/20,width:width/10,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._locateORClear()}} underlayColor = 'transparent'>
                   <View>
-                    {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> :null }
+                    {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="location-searching" size = {20} color = "lightgrey" />}
                   </View>
               </TouchableHighlight>
           </View>
@@ -155,6 +224,7 @@ class Area extends Component {
          onPress =  {(e) => {this._handleDrag(e.nativeEvent.coordinate)}}
          //animateToRegion = {this._animateToRegion}
          scrollEnabled = {!this.state.userDrawing}
+         //onRegionChangeComplete={(center)=>{console.log('center',center)}}
         >
           <Map.Polygon
              coordinates = {this.state.points}
