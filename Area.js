@@ -49,18 +49,17 @@ class Area extends Component {
 
   _handleDrag = (cord) => {
     if(this.state.userDrawing){
-
+      var area = 0
       if(this.state.points.length > 3) {
         var turfPolygon = LatLngToTurf(this.state.points)
-        var area = turf.area(turfPolygon);
+        area = turf.area(turfPolygon);
         console.log('area',area);
       }
 
       this.setState({
         points:[...this.state.points,cord],
-        area:area
+        area: area
       })
-
 
     }
   }
@@ -148,7 +147,7 @@ class Area extends Component {
         <View style={{flex:1,height:height/13,width:width,backgroundColor:'#00C5F0',flexDirection:'row'}}>
           <TouchableHighlight  style={{flex:6,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#0aabcf':'#00C5F0',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._handleDraw()}}>
               <View>
-                <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>{this.state.userDrawing ? this.state.area : 'Draw'}</Text>
+                <Text style={{color:'white',fontSize:FS - 10,fontFamily:FF,fontWeight:'bold'}}>{this.state.userDrawing ? this.state.area : 'DRAW'}</Text>
               </View>
           </TouchableHighlight>
         </View>
@@ -160,9 +159,7 @@ class Area extends Component {
                 <Text style={{color:'white',fontSize:FS/2,fontFamily:FF}}>{this.state.userDrawing ? this.state.area + ' Sq miles' : 'Draw'}</Text>
             </View>
             <TouchableHighlight  style={{flex:1,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#0aabcf':'#00C5F0',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._clear()}}>
-                <View>
-                  <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>{'Clear'}</Text>
-                </View>
+            <Icon name="cancel" size = {30} color = "white" />
             </TouchableHighlight>
         </View>
       )
@@ -223,7 +220,7 @@ class Area extends Component {
           </View>
       </View>
       <Map
-         style={{flex:1,height:height/1.38,width:width}}
+         style={{flex:1,height:height/1.28,width:width}}
          mapType = 'hybrid'
          ref = 'Map'
          //loadingEnabled = {true}

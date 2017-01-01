@@ -38,9 +38,9 @@ class Navigation extends Component {
             )
       case 'Distance':
             return (
-              <View style={{flex:1,backgroundColor:'green',marginTop:height/12}}>
-                    <Distance title={route.title} navigator = {navigator} />
-              </View>
+                <View style={{flex:1,backgroundColor:'transparent',marginTop:height/13}}>
+                    <Distance title={route.title} navigator = {navigator}/>
+                </View>
             );
         break;
         case 'Markers':
@@ -114,8 +114,22 @@ class Navigation extends Component {
           )
       case 'Distance':
           return(
-            <View style={{backgroundColor:'#65D5EF',height:height/8.5,width:width,alignItems:'center',justifyContent:'center'}}>
-               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/18,marginTop:10}}/>
+            <View style={{backgroundColor:'#FF5900',height:height/13,width:width,alignItems:'center',justifyContent:'center',marginTop:-height/37,flexDirection:'row'}}>
+
+               <TouchableHighlight style={{flex:1,height:height/15,backgroundColor:'transparent',alignItems:'center',justifyContent:'center'}} onPress = { ()=> {navigator.pop()}} >
+                    <Icon name="keyboard-arrow-left" size={40} color="white" />
+                </TouchableHighlight>
+
+                <View style={{flex:5,height:height/15,backgroundColor:'transparent',alignItems:'center',justifyContent:'center'}}>
+                    <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20}}/>
+                </View>
+
+                <View style={{flex:1,height:height/15,backgroundColor:'transparent'}}>
+                </View>
+
+              {/* <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20}}/>
+               <Icon name="backward" size={40} color="white" />
+               <Icon name="backward" size={40} color="white" /> */}
             </View>
           )
       case 'Markers':
