@@ -88,7 +88,7 @@ class Navigation extends Component {
     switch (route.title) {
       case 'Home':
           return(
-            <View style={{backgroundColor:'green',height:height/13,width:width,alignItems:'center',justifyContent:'center',marginTop:-height/37}}>
+            <View style={{backgroundColor:'green',height:height/13,width:width,alignItems:'center',justifyContent:'center',marginTop:-height/29}}>
                <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20}}/>
             </View>
           )

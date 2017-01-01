@@ -13,6 +13,8 @@ import {
   Navigator
 } from 'react-native';
 
+var units = "miles";
+
 exports.examples = [
   {
     title: 'navigator.geolocation',
@@ -50,18 +52,29 @@ class Distance extends Component {
   _handleDrag = (cord) => {
     if(this.state.userDrawing){
 
-      if(this.state.points.length > 3) {
-        var turfPolygon = LatLngToTurf(this.state.points)
-        var area = turf.area(turfPolygon);
-        console.log('area',area);
-      }
-
       this.setState({
         points:[...this.state.points,cord],
-        area:area
+      },() => {
+
+        var distance = 0
+        if(this.state.points.length > 1) {
+          //var turfPolygon = LatLngToTurf(this.state.points)
+          console.log('this.state.points.length',this.state.points);
+          debugger
+          var from = LatLngToTurf(this.state.points[this.state.points.length - 2])
+          var to = LatLngToTurf(this.state.points[this.state.points.length - 1 ])
+          var points = {
+              "type": "FeatureCollection",
+              "features": [from, to]
+            };
+          distance = turf.distance(from, to, units);
+
+          this.setState({
+            area: this.state.area + distance,
+          })
+        }
+
       })
-
-
     }
   }
 
@@ -145,24 +158,22 @@ class Distance extends Component {
   _getControls = () => {
     if(!this.state.userDrawing){
       return (
-        <View style={{flex:1,height:height/13,width:width,backgroundColor:'#FF5900',flexDirection:'row'}}>
-          <TouchableHighlight  style={{flex:6,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#FF5900':'#00C5F0',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._handleDraw()}}>
+        <View style={{flex:1,height:height/13,width:width,backgroundColor:'#FF9364',flexDirection:'row'}}>
+          <TouchableHighlight  style={{flex:6,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#FF9364':'#FF9364',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._handleDraw()}}>
               <View>
-                <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>{this.state.userDrawing ? this.state.area : 'Draw'}</Text>
+                <Text style={{color:'white',fontSize:FS - 10,fontFamily:FF,fontWeight:'bold'}}>{this.state.userDrawing ? this.state.area : 'DRAW'}</Text>
               </View>
           </TouchableHighlight>
         </View>
       )
     }else {
       return(
-        <View style={{flex:1,height:height/13,width:width,backgroundColor:'#FF5900',flexDirection:'row'}}>
-            <View style={{flex:5,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#0aabcf':'#00C5F0',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._handleDraw()}}>
-                <Text style={{color:'white',fontSize:FS/2,fontFamily:FF}}>{this.state.userDrawing ? this.state.area + ' Sq miles' : 'Draw'}</Text>
+        <View style={{flex:1,height:height/13,width:width,backgroundColor:'#00C5F0',flexDirection:'row'}}>
+            <View style={{flex:5,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#FF9364':'#fc773d',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._handleDraw()}}>
+                <Text style={{color:'white',fontSize:FS/2,fontFamily:FF}}>{this.state.userDrawing ? this.state.area + ' Miles' : 'Draw'}</Text>
             </View>
-            <TouchableHighlight  style={{flex:1,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#FF5900':'#00C5F0',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._clear()}}>
-                <View>
-                  <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>{'Clear'}</Text>
-                </View>
+            <TouchableHighlight  style={{flex:1,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#FF9364':'#fc773d',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._clear()}}>
+            <Icon name="cancel" size = {30} color = "white" />
             </TouchableHighlight>
         </View>
       )
@@ -201,48 +212,48 @@ class Distance extends Component {
 
   render() {
     return (
-    <View style={styles.container}>
-      <View style={{height:height/15,width:width,backgroundColor:'#FF9364',alignItems:'center',justifyContent:'center'}}>
-          <View style={{height:height/20,width:width -width/15,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:height/20,flexDirection:'row'}}>
-              <View>
-                <TextInput
-                    style={{alignItems:'center',justifyContent:'center',height:height/21,width:width/1.3,backgroundColor:'white',fontFamily:'AvenirNext-bold'}}
-                    value = {this.state.locationString}
-                    onChangeText = {(locationString) => {this.setState({locationString})}}
-                    placeholder = 'Search'
-                    keyboardType = 'web-search'
-                    onSubmitEditing = {()=>{this._fetchLocationDetails()}}
-                    ref = 'searchBar'
-                    />
-              </View>
-              <TouchableHighlight style={{height:height/20,width:width/10,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._locateORClear()}} underlayColor = 'transparent'>
-                  <View>
-                    {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="location-searching" size = {20} color = "lightgrey" />}
-                  </View>
-              </TouchableHighlight>
-          </View>
-      </View>
-      <Map
-         style={{flex:1,height:height/1.38,width:width}}
-         mapType = 'hybrid'
-         ref = 'Map'
-         //loadingEnabled = {true}
-         scrollEnabled = { this.state.scrollEnabled }
-         onPanDrag =  {(e) => {this._handleDrag(e.nativeEvent.coordinate)}}
-         onPress =  {(e) => {this._handleDrag(e.nativeEvent.coordinate)}}
-         //animateToRegion = {this._animateToRegion}
-         scrollEnabled = {!this.state.userDrawing}
-         //onRegionChangeComplete={(center)=>{console.log('center',center)}}
-        >
-          <Map.Polygon
-             coordinates = {this.state.points}
-             strokeColor = "#00C5F0"
-             strokeWidth = {5}/>
-        </Map>
-        <View style={{flex:1,height:height/13,width:width,backgroundColor:'#00C5F0',flexDirection:'row'}}>
-          {this._getControls()}
+      <View style={styles.container}>
+        <View style={{height:height/15,width:width,backgroundColor:'#FF9364',alignItems:'center',justifyContent:'center'}}>
+            <View style={{height:height/20,width:width -width/15,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:height/20,flexDirection:'row'}}>
+                <View>
+                  <TextInput
+                      style={{alignItems:'center',justifyContent:'center',height:height/21,width:width/1.3,backgroundColor:'white',fontFamily:'AvenirNext-bold'}}
+                      value = {this.state.locationString}
+                      onChangeText = {(locationString) => {this.setState({locationString})}}
+                      placeholder = 'Search'
+                      keyboardType = 'web-search'
+                      onSubmitEditing = {()=>{this._fetchLocationDetails()}}
+                      ref = 'searchBar'
+                      />
+                </View>
+                <TouchableHighlight style={{height:height/20,width:width/10,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._locateORClear()}} underlayColor = 'transparent'>
+                    <View>
+                      {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="location-searching" size = {20} color = "lightgrey" />}
+                    </View>
+                </TouchableHighlight>
+            </View>
         </View>
-      </View>
+        <Map
+           style={{flex:1,height:height/1.28,width:width}}
+           mapType = 'hybrid'
+           ref = 'Map'
+           //loadingEnabled = {true}
+           scrollEnabled = { this.state.scrollEnabled }
+           onPanDrag =  {(e) => {this._handleDrag(e.nativeEvent.coordinate)}}
+           onPress =  {(e) => {this._handleDrag(e.nativeEvent.coordinate)}}
+           //animateToRegion = {this._animateToRegion}
+           scrollEnabled = {!this.state.userDrawing}
+           //onRegionChangeComplete={(center)=>{console.log('center',center)}}
+          >
+            <Map.Polyline
+               coordinates = {this.state.points}
+               strokeColor = "#fc773d"
+               strokeWidth = {5}/>
+          </Map>
+          <View style={{flex:1,height:height/13,width:width,backgroundColor:'#00C5F0',flexDirection:'row'}}>
+            {this._getControls()}
+          </View>
+        </View>
     );
   }
 }
