@@ -15,15 +15,6 @@ import {
 
 var units = "miles";
 
-exports.examples = [
-  {
-    title: 'navigator.geolocation',
-    render: function(): React.Element<any> {
-      return <Markers/>;
-    },
-  }
-];
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=AIzaSyAdvT_G38grWe6w2oC3KAjxNVVlozbjlYo
 
@@ -228,7 +219,7 @@ class Markers extends Component {
                 </View>
                 <TouchableHighlight style={{height:height/20,width:width/10,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._locateORClear()}} underlayColor = 'transparent'>
                     <View>
-                      {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="location-searching" size = {20} color = "lightgrey" />}
+                      {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="gps-fixed" size = {20} color = "#4285F4" />}
                     </View>
                 </TouchableHighlight>
             </View>

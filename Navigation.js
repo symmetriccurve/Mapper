@@ -103,7 +103,7 @@ class Navigation extends Component {
       case 'Home':
           return(
               <View style={{backgroundColor:'transparent',height:height/25,width:width/3,alignItems:'center',justifyContent:'center'}}>
-                 <Image source = {require('./Images/mapper_logo.png')} style={{width:width/5,height:height/25,resizeMode: 'contain'}}/>
+                 <Image source = {require('./Images/mapper_logo.png')} style={{width:width/4,height:height/20,resizeMode: 'contain'}}/>
               </View>
           )
       case 'Area':

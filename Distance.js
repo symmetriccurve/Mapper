@@ -15,15 +15,6 @@ import {
 
 var units = "miles";
 
-exports.examples = [
-  {
-    title: 'navigator.geolocation',
-    render: function(): React.Element<any> {
-      return <Distance/>;
-    },
-  }
-];
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=AIzaSyAdvT_G38grWe6w2oC3KAjxNVVlozbjlYo
 
@@ -214,7 +205,7 @@ class Distance extends Component {
     return (
       <View style={styles.container}>
         <View style={{height:height/15,width:width,backgroundColor:'#FF9364',alignItems:'center',justifyContent:'center'}}>
-            <View style={{height:height/20,width:width -width/15,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:height/20,flexDirection:'row'}}>
+            <View style={{height:height/20,width:width - width/15,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:height/20,flexDirection:'row'}}>
                 <View>
                   <TextInput
                       style={{alignItems:'center',justifyContent:'center',height:height/21,width:width/1.3,backgroundColor:'white',fontFamily:'AvenirNext-bold'}}
@@ -228,7 +219,7 @@ class Distance extends Component {
                 </View>
                 <TouchableHighlight style={{height:height/20,width:width/10,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._locateORClear()}} underlayColor = 'transparent'>
                     <View>
-                      {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="location-searching" size = {20} color = "lightgrey" />}
+                      {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="gps-fixed" size = {20} color = "#4285F4" />}
                     </View>
                 </TouchableHighlight>
             </View>

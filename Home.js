@@ -47,7 +47,8 @@ class Home extends Component {
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight underlayColor= 'transparent'
                       style={[styles.card,{backgroundColor: this.props.colors.area.mainClr}]}
-                      onPress = { ()=>{  this.props.navigator.push({title:'Area'})}}>
+                      onPress = { ()=>{  this.props.navigator.push({title:'Area'})}}
+                      underlayColor = {this.props.colors.area.mainClr}>
                         <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Area</Text>
                     </TouchableHighlight>
                 </View>
@@ -56,7 +57,8 @@ class Home extends Component {
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight
                       style={[styles.card,{backgroundColor: this.props.colors.distance.mainClr}]}
-                      onPress = { ()=>{ this.props.navigator.push({title:'Distance'})  }}>
+                      onPress = { ()=>{ this.props.navigator.push({title:'Distance'})  }}
+                      underlayColor = {this.props.colors.distance.mainClr}>
                           <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Distance</Text>
                     </TouchableHighlight>
                 </View>
@@ -64,7 +66,8 @@ class Home extends Component {
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight
                       style={[styles.card,{backgroundColor: this.props.colors.marker.mainClr}]}
-                      onPress = { ()=>{  this.props.navigator.push({title:'Markers'})  }}>
+                      onPress = { ()=>{  this.props.navigator.push({title:'Markers'})  }}
+                      underlayColor = {this.props.colors.marker.mainClr}>
                           <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Markers</Text>
                     </TouchableHighlight>
                 </View>

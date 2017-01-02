@@ -13,15 +13,6 @@ import {
   Navigator
 } from 'react-native';
 
-exports.examples = [
-  {
-    title: 'navigator.geolocation',
-    render: function(): React.Element<any> {
-      return <Area/>;
-    },
-  }
-];
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //https://maps.googleapis.com/maps/api/place/textsearch/json?query=123+main+street&key=AIzaSyAdvT_G38grWe6w2oC3KAjxNVVlozbjlYo
 
@@ -44,20 +35,23 @@ class Area extends Component {
     }
   }
 
-  componentWillMount() {
-  }
-
   _handleDrag = (cord) => {
-    if(this.state.userDrawing){
-      var area = 0
-      if(this.state.points.length > 3) {
-        var turfPolygon = LatLngToTurf(this.state.points)
-        area = turf.area(turfPolygon);
-      }
 
+    if( this.state.userDrawing ){
+      var area = 0
       this.setState({
-        points:[...this.state.points,cord],
-        area: area
+        points:[...this.state.points,cord]
+      },() => {
+
+        if(this.state.points.length > 2) {
+          var turfPolygon = LatLngToTurf(this.state.points)
+          area = turf.area(turfPolygon);
+        }
+
+        this.setState({
+          area:area
+        })
+
       })
 
     }
@@ -78,42 +72,12 @@ class Area extends Component {
   }
 
   _mapPantoThisLocation = (location) => {
-      // switch (expression) {
-      //   case expression:
-      //
-      //     break;
-      //   default:
-      //
-      // }
       this.refs.Map.animateToRegion({
           latitude:location.geometry.location.lat,
           longitude:location.geometry.location.lng,
           longitudeDelta:this._getZoomLevel(),
           latitudeDelta:this._getZoomLevel()
       },10000)
-  }
-
-  _getZoomLevel = (zoomLevel) =>{
-    //console.log('Check this',zoomLevel.geometry.bounds.northeast.lng - zoomLevel.geometry.bounds.southwest.lng);
-    //console.log('Check this',zoomLevel.geometry.bounds.northeast.lat - zoomLevel.geometry.bounds.southwest.lat);
-    //const longitudeDelta = Math.abs(se_lng - nw_lng);
-    //const latitudeDelta = Math.abs(se_lat - nw_lat);
-    //types: ["locality","political"]
-    //console.log('zoomLevel',zoomLevel);
-    switch (zoomLevel) {
-        case "locality":
-            return 0.7
-        case "country":
-            return 50
-        case "postal_code":
-            return 0.1
-        case "premise":
-        case "street_address":
-            return 0.001
-        default:
-            return 100
-    }
-      return 0
   }
 
   _fetchLocationDetails = () => {
@@ -186,13 +150,6 @@ class Area extends Component {
         this.setState({locationString:''})
         this.refs.searchBar.focus()
     }
-    //console.log('SearchBar', );
-    // this.refs.Map.animateToRegion({
-    //     latitude: 0,
-    //     longitude: 0,
-    //     latitudeDelta: 120,
-    //     longitudeDelta: 140
-    // },500);
   }
 
   render() {
@@ -213,7 +170,7 @@ class Area extends Component {
               </View>
               <TouchableHighlight style={{height:height/20,width:width/10,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._locateORClear()}} underlayColor = 'transparent'>
                   <View>
-                    {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="location-searching" size = {20} color = "lightblue" />}
+                    {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="gps-fixed" size = {20} color = "#4285F4" />}
                   </View>
               </TouchableHighlight>
           </View>
@@ -230,10 +187,18 @@ class Area extends Component {
          scrollEnabled = {!this.state.userDrawing}
          //onRegionChangeComplete={(center)=>{console.log('center',center)}}
         >
+        {
+          this.state.points.length > 2 ?
           <Map.Polygon
              coordinates = {this.state.points}
              strokeColor = "#00C5F0"
-             strokeWidth = {5}/>
+             strokeWidth = {5}/> :
+         <Map.Polyline
+            coordinates = {this.state.points}
+            strokeColor = "#00C5F0"
+            strokeWidth = {5}/>
+        }
+
         </Map>
         <View style={{flex:1,height:height/13,width:width,backgroundColor:'#00C5F0',flexDirection:'row'}}>
           {this._getControls()}
