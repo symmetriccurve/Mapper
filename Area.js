@@ -53,7 +53,6 @@ class Area extends Component {
       if(this.state.points.length > 3) {
         var turfPolygon = LatLngToTurf(this.state.points)
         area = turf.area(turfPolygon);
-        console.log('area',area);
       }
 
       this.setState({
@@ -95,12 +94,12 @@ class Area extends Component {
   }
 
   _getZoomLevel = (zoomLevel) =>{
-    console.log('Check this',zoomLevel.geometry.bounds.northeast.lng - zoomLevel.geometry.bounds.southwest.lng);
-    console.log('Check this',zoomLevel.geometry.bounds.northeast.lat - zoomLevel.geometry.bounds.southwest.lat);
+    //console.log('Check this',zoomLevel.geometry.bounds.northeast.lng - zoomLevel.geometry.bounds.southwest.lng);
+    //console.log('Check this',zoomLevel.geometry.bounds.northeast.lat - zoomLevel.geometry.bounds.southwest.lat);
     //const longitudeDelta = Math.abs(se_lng - nw_lng);
     //const latitudeDelta = Math.abs(se_lat - nw_lat);
     //types: ["locality","political"]
-    console.log('zoomLevel',zoomLevel);
+    //console.log('zoomLevel',zoomLevel);
     switch (zoomLevel) {
         case "locality":
             return 0.7
@@ -125,9 +124,9 @@ class Area extends Component {
         .then((responseData) => {
 
             if(responseData.results.length){
-                console.log('responseData.results[0]',responseData.results[0]);
-                console.log('latitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
-                console.log('longitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
+                // console.log('responseData.results[0]',responseData.results[0]);
+                // console.log('latitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
+                // console.log('longitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
                 this.refs.Map.animateToRegion({
                     latitude: responseData.results[0].geometry.location.lat,
                     longitude: responseData.results[0].geometry.location.lng,

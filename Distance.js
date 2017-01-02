@@ -59,7 +59,7 @@ class Distance extends Component {
         var distance = 0
         if(this.state.points.length > 1) {
           //var turfPolygon = LatLngToTurf(this.state.points)
-          console.log('this.state.points.length',this.state.points);
+          //console.log('this.state.points.length',this.state.points);
           debugger
           var from = LatLngToTurf(this.state.points[this.state.points.length - 2])
           var to = LatLngToTurf(this.state.points[this.state.points.length - 1 ])
@@ -109,12 +109,12 @@ class Distance extends Component {
   }
 
   _getZoomLevel = (zoomLevel) =>{
-    console.log('Check this',zoomLevel.geometry.bounds.northeast.lng - zoomLevel.geometry.bounds.southwest.lng);
-    console.log('Check this',zoomLevel.geometry.bounds.northeast.lat - zoomLevel.geometry.bounds.southwest.lat);
+    //console.log('Check this',zoomLevel.geometry.bounds.northeast.lng - zoomLevel.geometry.bounds.southwest.lng);
+    //console.log('Check this',zoomLevel.geometry.bounds.northeast.lat - zoomLevel.geometry.bounds.southwest.lat);
     //const longitudeDelta = Math.abs(se_lng - nw_lng);
     //const latitudeDelta = Math.abs(se_lat - nw_lat);
     //types: ["locality","political"]
-    console.log('zoomLevel',zoomLevel);
+    //console.log('zoomLevel',zoomLevel);
     switch (zoomLevel) {
         case "locality":
             return 0.7
@@ -139,9 +139,9 @@ class Distance extends Component {
         .then((responseData) => {
 
             if(responseData.results.length){
-                console.log('responseData.results[0]',responseData.results[0]);
-                console.log('latitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
-                console.log('longitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
+                //console.log('responseData.results[0]',responseData.results[0]);
+                //console.log('latitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
+                //console.log('longitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
                 this.refs.Map.animateToRegion({
                     latitude: responseData.results[0].geometry.location.lat,
                     longitude: responseData.results[0].geometry.location.lng,
