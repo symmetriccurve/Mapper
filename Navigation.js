@@ -14,10 +14,20 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 var {height, width } = Dimensions.get('window')
+
+
 var Home = require('./Home')
 var Distance = require('./Distance')
 var Area = require('./Area')
 var Markers = require('./Markers')
+
+const colors = {
+  navBar : { mainClr:'#EF5350' },
+  area : { mainClr: '#65D5EF', subClr: '#65D5EF' },
+  distance : { mainClr:'#F0A24F', subClr: '#F0A24F' },
+  marker : { mainClr: '#44D8C6', subClr:  '#44D8C6'}
+}
+
 class Navigation extends Component {
    constructor(props){
      super(props)
@@ -32,26 +42,26 @@ class Navigation extends Component {
       case 'Home':
             return  (
                 <View style={{flex:1,backgroundColor:'transparent',marginTop:height/12}}>
-                    <Home title={route.title} navigator = {navigator}/>
+                    <Home title={route.title} navigator = {navigator} colors = {colors}/>
                 </View>
             )
       case 'Area':
             return  (
                 <View style={{flex:1,backgroundColor:'transparent',marginTop:height/12}}>
-                    <Area title={route.title} navigator = {navigator}/>
+                    <Area title={route.title} navigator = {navigator} colors = {colors}/>
                 </View>
             )
       case 'Distance':
             return (
                 <View style={{flex:1,backgroundColor:'transparent',marginTop:height/12}}>
-                    <Distance title={route.title} navigator = {navigator}/>
+                    <Distance title={route.title} navigator = {navigator} colors = {colors}/>
                 </View>
             );
         break;
         case 'Markers':
               return (
                 <View style={{flex:1,backgroundColor:'green',marginTop:height/12}}>
-                      <Markers title={route.title} navigator = {navigator} />
+                      <Markers title={route.title} navigator = {navigator} colors = {colors}/>
                 </View>
               );
           break;
@@ -66,8 +76,8 @@ class Navigation extends Component {
          return <View />
        }else {
          return(
-          <TouchableHighlight style={{backgroundColor:'transparent',height:50,width:50}} underlayColor= 'transparent'  onPress = { ()=> {navigator.pop()} }>
-             <Icon name="keyboard-arrow-left" size={40} color="white" />
+          <TouchableHighlight style={{backgroundColor:'transparent',height:height/25,width:height/30,alignItems:'center'}} underlayColor= 'transparent'  onPress = { ()=> {navigator.pop()} }>
+             <Image style={{height:height/30,width:height/30}} source = {require('./Images/backarrow.png')}/>
           </TouchableHighlight>
          );
        }
@@ -123,7 +133,7 @@ class Navigation extends Component {
 
   _navigationBar = () => {
     return (
-      <Navigator.NavigationBar style={{flex:1,backgroundColor:'#F46C6C',height:height/12}}
+      <Navigator.NavigationBar style={{flex:1,backgroundColor:colors.navBar.mainClr,height:height/12}}
        routeMapper={Navigation.NavigationBarRouteMapper(this)}/>
     );
   }

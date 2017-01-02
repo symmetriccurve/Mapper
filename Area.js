@@ -213,7 +213,7 @@ class Area extends Component {
               </View>
               <TouchableHighlight style={{height:height/20,width:width/10,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._locateORClear()}} underlayColor = 'transparent'>
                   <View>
-                    {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="location-searching" size = {20} color = "lightgrey" />}
+                    {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="location-searching" size = {20} color = "lightblue" />}
                   </View>
               </TouchableHighlight>
           </View>

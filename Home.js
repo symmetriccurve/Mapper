@@ -20,8 +20,9 @@ const cardHeight = height/3.35
 const cardWidth = width - 10
 const FF = 'AppleSDGothicNeo-Medium'
 const FS = height/13
-class Home extends Component {
 
+
+class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,9 +43,10 @@ class Home extends Component {
   render() {
     return (
       <View style={styles.container}>
+
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight underlayColor= 'transparent'
-                      style={[styles.card,{backgroundColor:'#65D5EF'}]}
+                      style={[styles.card,{backgroundColor: this.props.colors.area.mainClr}]}
                       onPress = { ()=>{  this.props.navigator.push({title:'Area'})}}>
                         <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Area</Text>
                     </TouchableHighlight>
@@ -53,7 +55,7 @@ class Home extends Component {
 
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight
-                      style={[styles.card,{backgroundColor:'#F0A24F'}]}
+                      style={[styles.card,{backgroundColor: this.props.colors.distance.mainClr}]}
                       onPress = { ()=>{ this.props.navigator.push({title:'Distance'})  }}>
                           <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Distance</Text>
                     </TouchableHighlight>
@@ -61,7 +63,7 @@ class Home extends Component {
 
                 <View style={{height:cardHeight}}>
                     <TouchableHighlight
-                      style={[styles.card,{backgroundColor:'#44D8C6'}]}
+                      style={[styles.card,{backgroundColor: this.props.colors.marker.mainClr}]}
                       onPress = { ()=>{  this.props.navigator.push({title:'Markers'})  }}>
                           <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Markers</Text>
                     </TouchableHighlight>

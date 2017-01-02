@@ -158,8 +158,8 @@ class Markers extends Component {
   _getControls = () => {
     if(!this.state.userDrawing){
       return (
-        <View style={{flex:1,height:height/13,width:width,backgroundColor:'#FF9364',flexDirection:'row'}}>
-          <TouchableHighlight  style={{flex:6,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#FF9364':'#FF9364',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._handleDraw()}}>
+        <View style={{flex:1,height:height/13,width:width,backgroundColor:this.props.colors.marker.mainClr,flexDirection:'row'}}>
+          <TouchableHighlight  style={{flex:6,height:height/13,width:width,backgroundColor:this.state.userDrawing?this.props.colors.marker.subClr:this.props.colors.marker.mainClr,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._handleDraw()}}>
               <View>
                 <Text style={{color:'white',fontSize:FS - 10,fontFamily:FF,fontWeight:'bold'}}>{this.state.userDrawing ? this.state.area : 'DRAW'}</Text>
               </View>
@@ -168,11 +168,11 @@ class Markers extends Component {
       )
     }else {
       return(
-        <View style={{flex:1,height:height/13,width:width,backgroundColor:'#00C5F0',flexDirection:'row'}}>
-            <View style={{flex:5,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#FF9364':'#fc773d',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._handleDraw()}}>
+        <View style={{flex:1,height:height/13,width:width,backgroundColor:this.props.colors.marker.mainClr,flexDirection:'row'}}>
+            <View style={{flex:5,height:height/13,width:width,backgroundColor:this.state.userDrawing?this.props.colors.marker.subClr:this.props.colors.marker.mainClr,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._handleDraw()}}>
                 <Text style={{color:'white',fontSize:FS/2,fontFamily:FF}}>{this.state.userDrawing ? this.state.area + ' Miles' : 'Draw'}</Text>
             </View>
-            <TouchableHighlight  style={{flex:1,height:height/13,width:width,backgroundColor:this.state.userDrawing?'#FF9364':'#fc773d',alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._clear()}}>
+            <TouchableHighlight  style={{flex:1,height:height/13,width:width,backgroundColor:this.state.userDrawing?this.props.colors.marker.subClr:this.props.colors.marker.mainClr,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._clear()}}>
             <Icon name="cancel" size = {30} color = "white" />
             </TouchableHighlight>
         </View>
@@ -213,7 +213,7 @@ class Markers extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{height:height/15,width:width,backgroundColor:'#FF9364',alignItems:'center',justifyContent:'center'}}>
+        <View style={{height:height/15,width:width,backgroundColor:this.props.colors.marker.mainClr,alignItems:'center',justifyContent:'center'}}>
             <View style={{height:height/20,width:width -width/15,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:height/20,flexDirection:'row'}}>
                 <View>
                   <TextInput
