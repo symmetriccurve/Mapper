@@ -76,7 +76,7 @@ class Navigation extends Component {
          return <View />
        }else {
          return(
-          <TouchableHighlight style={{backgroundColor:'transparent',height:height/25,width:height/30,alignItems:'center'}} underlayColor= 'transparent'  onPress = { ()=> {navigator.pop()} }>
+          <TouchableHighlight style={{backgroundColor:'transparent',height:height/25,width:height/30,alignItems:'center',marginLeft:height/50}} underlayColor= 'transparent'  onPress = { ()=> {navigator.pop()} }>
              <Image style={{height:height/30,width:height/30}} source = {require('./Images/backarrow.png')}/>
           </TouchableHighlight>
          );
@@ -103,25 +103,25 @@ class Navigation extends Component {
       case 'Home':
           return(
               <View style={{backgroundColor:'transparent',height:height/25,width:width/3,alignItems:'center',justifyContent:'center'}}>
-                 <Image source = {require('./Images/mapper_logo.png')} style={{width:width/5,height:height/25}}/>
+                 <Image source = {require('./Images/mapper_logo.png')} style={{width:width/5,height:height/25,resizeMode: 'contain'}}/>
               </View>
           )
       case 'Area':
           return(
             <View style={{backgroundColor:'transparent',height:height/25,width:width/3,alignItems:'center',justifyContent:'center'}}>
-               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/5,height:height/25}}/>
+               <Image source = {require('./Images/area.png')} style={{width:width/5,height:height/25,resizeMode: 'contain'}}/>
             </View>
           )
       case 'Distance':
           return(
             <View style={{backgroundColor:'transparent',height:height/25,width:width/3,alignItems:'center',justifyContent:'center'}}>
-               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/5,height:height/25}}/>
+               <Image source = {require('./Images/distance.png')} style={{width:width/5,height:height/25,resizeMode: 'contain'}}/>
             </View>
           )
       case 'Markers':
           return(
             <View style={{backgroundColor:'transparent',height:height/25,width:width/3,alignItems:'center',justifyContent:'center'}}>
-               <Image source = {require('./Images/mapper_logo.png')} style={{width:width/5,height:height/25}}/>
+               <Image source = {require('./Images/markers.png')} style={{width:width/5,height:height/25,resizeMode: 'contain'}}/>
             </View>
           )
       default:
