@@ -123,25 +123,34 @@ class Distance extends Component {
 
   _fetchLocationDetails = () => {
     if(this.state.locationString != ''){
-      var api = "https://maps.googleapis.com/maps/api/geocode/json?&address="+JSON.stringify(this.state.locationString)
-      fetch(api)
-        .then((response) => {return response.json()})
-        .then((responseData) => {
+        if(this.props.isConnected){
+            var api = "https://maps.googleapis.com/maps/api/geocode/json?&address="+JSON.stringify(this.state.locationString)
+            fetch(api)
+              .then((response) => {return response.json()})
+              .then((responseData) => {
 
-            if(responseData.results.length){
-                //console.log('responseData.results[0]',responseData.results[0]);
-                //console.log('latitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
-                //console.log('longitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
-                this.refs.Map.animateToRegion({
-                    latitude: responseData.results[0].geometry.location.lat,
-                    longitude: responseData.results[0].geometry.location.lng,
-                    latitudeDelta: responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat,
-                    longitudeDelta: responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat
-                },500);
-            }
-          })
+                  if(responseData.results.length){
+                      // console.log('responseData.results[0]',responseData.results[0]);
+                      // console.log('latitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
+                      // console.log('longitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
+                      this.refs.Map.animateToRegion({
+                          latitude: responseData.results[0].geometry.location.lat,
+                          longitude: responseData.results[0].geometry.location.lng,
+                          latitudeDelta: responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat,
+                          longitudeDelta: responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat
+                      },500);
+                  } else {
+                      Alert.alert('Error','Location not found.')
+                  }
+                })
+              .catch((error)=>{
+                  Alert.alert('Error','No Internet Connection Available')
+               })
+        }else {
+            Alert.alert('Unable to Connect to Internet')
+        }
     }else {
-      Alert.alert('Please Enter Location')
+        Alert.alert('Error','Please input a Location')
     }
   }
 

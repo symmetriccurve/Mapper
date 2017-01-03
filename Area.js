@@ -32,7 +32,7 @@ class Area extends Component {
       userDrawing: false,
       area: 0,
       locationString:'',
-      scrollEnabled: false
+      fetchingLocation: false
     }
   }
 
@@ -56,11 +56,6 @@ class Area extends Component {
       })
 
     }
-  }
-  componentWillMount (){
-    NetInfo.isConnected.fetch().then(isConnected => {
-    console.log('First, is ' + (isConnected ? 'online' : 'offline'));
-  });
   }
 
   _handleDraw = () => {
@@ -88,30 +83,42 @@ class Area extends Component {
 
   _fetchLocationDetails = () => {
     if(this.state.locationString != ''){
-      var api = "https://maps.googleapis.com/maps/api/geocode/json?&address="+JSON.stringify(this.state.locationString)
-      fetch(api)
-        .then((response) => {return response.json()})
-        .then((responseData) => {
+        if(this.props.isConnected){
+            this.setState({
+              fetchingLocation : true
+            })
+            var api = "https://maps.googleapis.com/maps/api/geocode/json?&address="+JSON.stringify(this.state.locationString)
+            fetch(api)
+              .then((response) => {return response.json()})
+              .then((responseData) => {
 
-            if(responseData.results.length){
-                // console.log('responseData.results[0]',responseData.results[0]);
-                // console.log('latitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
-                // console.log('longitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
-                this.refs.Map.animateToRegion({
-                    latitude: responseData.results[0].geometry.location.lat,
-                    longitude: responseData.results[0].geometry.location.lng,
-                    latitudeDelta: responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat,
-                    longitudeDelta: responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat
-                },500);
-            } else {
-                Alert.alert('Error','Location not found.')
-            }
-          })
-        .catch((error)=>{
-            Alert.alert('Error','No Internet Connection Available')
-         })
+                  if(responseData.results.length){
+                      // console.log('responseData.results[0]',responseData.results[0]);
+                      // console.log('latitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
+                      // console.log('longitudeDelta',responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat);
+                      this.refs.Map.animateToRegion({
+                          latitude: responseData.results[0].geometry.location.lat,
+                          longitude: responseData.results[0].geometry.location.lng,
+                          latitudeDelta: responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat,
+                          longitudeDelta: responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat
+                      },500);
+                  } else {
+                      Alert.alert('Error','Location not found.')
+                  }
+                  
+                  this.setState({
+                    fetchingLocation : false
+                  })
+
+                })
+              .catch((error)=>{
+                  Alert.alert('Error','No Internet Connection Available')
+               })
+        }else {
+            Alert.alert('Unable to Connect to Internet')
+        }
     }else {
-      Alert.alert('Error','Please input a Location')
+        Alert.alert('Error','Please input a Location')
     }
   }
 
@@ -163,11 +170,22 @@ class Area extends Component {
     }
   }
 
+  _getIcon = () =>{
+    if(this.state.locationString == '' && !this.state.fetchingLocation) {
+      return <Icon name="gps-fixed" size = {20} color = "#4285F4" />
+    } else if(this.state.locationString != '' && !this.state.fetchingLocation) {
+      return <Icon name="cancel" size = {20} color = "lightgrey" />
+    } else {
+      return <Icon name="refresh" size = {20} color = "#4285F4" />
+    }
+  }
+  //{this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="gps-fixed" size = {20} color = "#4285F4" />}
+
   render() {
     return (
     <View style={styles.container}>
       <View style={{height:height/15,width:width,backgroundColor:'#65D5EF',alignItems:'center',justifyContent:'center'}}>
-          <View style={{height:height/20,width:width -width/15,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:height/20,flexDirection:'row'}}>
+          <View style={{height:height/20,width:width - width/15,backgroundColor:'white',alignItems:'center',justifyContent:'center',borderRadius:height/20,flexDirection:'row'}}>
               <View>
                 <TextInput
                     style={{alignItems:'center',justifyContent:'center',height:height/21,width:width/1.3,backgroundColor:'white',fontFamily:'AvenirNext-bold'}}
@@ -181,7 +199,7 @@ class Area extends Component {
               </View>
               <TouchableHighlight style={{height:height/20,width:width/10,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._locateORClear()}} underlayColor = 'transparent'>
                   <View>
-                    {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="gps-fixed" size = {20} color = "#4285F4" />}
+                    {this._getIcon()}
                   </View>
               </TouchableHighlight>
           </View>

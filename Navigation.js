@@ -6,6 +6,7 @@ import {
   Text,
   View,
   Image,
+  NetInfo,
   MapView,
   Navigator,
   Dimensions,
@@ -14,6 +15,12 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 var {height, width } = Dimensions.get('window')
+
+
+// function handleFirstConnectivityChange(reach) {
+//   console.log('First change: ' + reach);
+// }
+
 
 
 var Home = require('./Home')
@@ -32,9 +39,24 @@ class Navigation extends Component {
    constructor(props){
      super(props)
      this.state = {
-       navColor: 'blue'
+       navColor : 'blue',
+       isConneted : false
      }
    }
+
+   handleConnectivity = (isConneted) => {
+      console.log('isConneted',isConneted);
+      this.setState({isConneted})
+   }
+
+   componentWillMount() {
+      NetInfo.isConnected.addEventListener('change',this.handleConnectivity)
+   }
+
+   componentWillUnmount() {
+      NetInfo.removeEventListener('change',this.handleConnectivity)
+   }
+
   _renderScene = ( route, navigator ) => {
     //console.log('route =>',route, ' navigator=>',navigator);
 
@@ -42,13 +64,13 @@ class Navigation extends Component {
       case 'Home':
             return  (
                 <View style={{flex:1,backgroundColor:'transparent',marginTop:height/12}}>
-                    <Home title={route.title} navigator = {navigator} colors = {colors}/>
+                    <Home title={route.title} navigator = {navigator} colors = {colors} isConnected = {this.state.isConneted} />
                 </View>
             )
       case 'Area':
             return  (
                 <View style={{flex:1,backgroundColor:'transparent',marginTop:height/12}}>
-                    <Area title={route.title} navigator = {navigator} colors = {colors}/>
+                    <Area title={route.title} navigator = {navigator} colors = {colors} isConnected = {this.state.isConneted} />
                 </View>
             )
       case 'Distance':
