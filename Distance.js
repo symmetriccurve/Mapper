@@ -192,7 +192,7 @@ class Distance extends Component {
               longitude : position.coords.longitude
             } , 500 )
         },
-        (error) => alert(JSON.stringify(error)),
+        (error) => Alert.alert(JSON.stringify(error)),
         // params Support only for Android
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
       );
@@ -200,13 +200,16 @@ class Distance extends Component {
         this.setState({locationString:''})
         this.refs.searchBar.focus()
     }
-    //console.log('SearchBar', );
-    // this.refs.Map.animateToRegion({
-    //     latitude: 0,
-    //     longitude: 0,
-    //     latitudeDelta: 120,
-    //     longitudeDelta: 140
-    // },500);
+  }
+
+  _getIcon = () => {
+    if(this.state.locationString == '' && !this.state.fetchingLocation) {
+      return <Icon name="gps-fixed" size = {20} color = "#4285F4" />
+    } else if(this.state.locationString != '' && !this.state.fetchingLocation) {
+      return <Icon name="cancel" size = {20} color = "lightgrey" />
+    } else {
+      return <Icon name="refresh" size = {20} color = "#4285F4" />
+    }
   }
 
   render() {
@@ -227,7 +230,7 @@ class Distance extends Component {
                 </View>
                 <TouchableHighlight style={{height:height/20,width:width/10,alignItems:'center',justifyContent:'center'}} onPress = {()=>{this._locateORClear()}} underlayColor = 'transparent'>
                     <View>
-                      {this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="gps-fixed" size = {20} color = "#4285F4" />}
+                      {this._getIcon()}
                     </View>
                 </TouchableHighlight>
             </View>

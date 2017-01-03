@@ -36,6 +36,17 @@ class Area extends Component {
     }
   }
 
+  componentWillReceiveProps = (newProps) => {
+      if(!newProps.isConnected) {
+        Alert.alert('Error','Unable to connect to internet',
+                [
+                    {text: 'Cancel', onPress: () => {}},
+                    {text: 'Try again', onPress: () => {this._fetchLocationDetails()}}
+                ]
+              )
+      }
+  }
+
   _handleDrag = (cord) => {
 
     if( this.state.userDrawing ){
@@ -105,7 +116,7 @@ class Area extends Component {
                   } else {
                       Alert.alert('Error','Location not found.')
                   }
-                  
+
                   this.setState({
                     fetchingLocation : false
                   })
@@ -115,7 +126,12 @@ class Area extends Component {
                   Alert.alert('Error','No Internet Connection Available')
                })
         }else {
-            Alert.alert('Unable to Connect to Internet')
+          Alert.alert('Error','Unable to connect to internet',
+                  [
+                    {text: 'Cancel', onPress: () => {}},
+                    {text: 'Try again', onPress: () => {this._fetchLocationDetails()}}
+                  ]
+                )
         }
     }else {
         Alert.alert('Error','Please input a Location')
@@ -179,7 +195,6 @@ class Area extends Component {
       return <Icon name="refresh" size = {20} color = "#4285F4" />
     }
   }
-  //{this.state.locationString != '' ? <Icon name="cancel" size = {20} color = "lightgrey" /> : <Icon name="gps-fixed" size = {20} color = "#4285F4" />}
 
   render() {
     return (
