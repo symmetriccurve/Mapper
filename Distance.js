@@ -51,7 +51,6 @@ class Distance extends Component {
         if(this.state.points.length > 1) {
           //var turfPolygon = LatLngToTurf(this.state.points)
           //console.log('this.state.points.length',this.state.points);
-          debugger
           var from = LatLngToTurf(this.state.points[this.state.points.length - 2])
           var to = LatLngToTurf(this.state.points[this.state.points.length - 1 ])
           var points = {

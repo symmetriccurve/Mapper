@@ -10,7 +10,8 @@ import {
   TouchableHighlight,
   TextInput,
   Alert,
-  Navigator
+  Navigator,
+  NetInfo
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -56,6 +57,11 @@ class Area extends Component {
 
     }
   }
+  componentWillMount (){
+    NetInfo.isConnected.fetch().then(isConnected => {
+    console.log('First, is ' + (isConnected ? 'online' : 'offline'));
+  });
+  }
 
   _handleDraw = () => {
       this.setState({
@@ -97,10 +103,15 @@ class Area extends Component {
                     latitudeDelta: responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat,
                     longitudeDelta: responseData.results[0].geometry.viewport.northeast.lat - responseData.results[0].geometry.viewport.southwest.lat
                 },500);
+            } else {
+                Alert.alert('Error','Location not found.')
             }
           })
+        .catch((error)=>{
+            Alert.alert('Error','No Internet Connection Available')
+         })
     }else {
-      Alert.alert('Please Enter Location')
+      Alert.alert('Error','Please input a Location')
     }
   }
 

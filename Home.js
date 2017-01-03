@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 
 var {height, width } = Dimensions.get('window')
-const cardHeight = height/3.35
+const cardHeight = height/2.2
 const cardWidth = width - 10
 const FF = 'AppleSDGothicNeo-Medium'
 const FS = height/13
@@ -63,14 +63,14 @@ class Home extends Component {
                     </TouchableHighlight>
                 </View>
 
-                <View style={{height:cardHeight}}>
+              { /* <View style={{height:cardHeight}}>
                     <TouchableHighlight
                       style={[styles.card,{backgroundColor: this.props.colors.marker.mainClr}]}
                       onPress = { ()=>{  this.props.navigator.push({title:'Markers'})  }}
                       underlayColor = {this.props.colors.marker.mainClr}>
                           <Text style={{color:'white',fontSize:FS,fontFamily:FF}}>Markers</Text>
                     </TouchableHighlight>
-                </View>
+                </View> */}
 
       </View>
     );
