@@ -40,13 +40,12 @@ class Navigation extends Component {
      super(props)
      this.state = {
        navColor : 'blue',
-       isConneted : false
+       isConnected : false
      }
    }
 
-   handleConnectivity = (isConneted) => {
-      console.log('isConneted',isConneted);
-      this.setState({isConneted})
+   handleConnectivity = (isConnected) => {
+      this.setState({isConnected})
    }
 
    componentWillMount() {
@@ -64,19 +63,19 @@ class Navigation extends Component {
       case 'Home':
             return  (
                 <View style={{flex:1,backgroundColor:'transparent',marginTop:height/12}}>
-                    <Home title={route.title} navigator = {navigator} colors = {colors} isConnected = {this.state.isConneted} />
+                    <Home title={route.title} navigator = {navigator} colors = {colors}/>
                 </View>
             )
       case 'Area':
             return  (
                 <View style={{flex:1,backgroundColor:'transparent',marginTop:height/12}}>
-                    <Area title={route.title} navigator = {navigator} colors = {colors} isConnected = {this.state.isConneted} />
+                    <Area title={route.title} navigator = {navigator} colors = {colors} isConnected = {this.state.isConnected} />
                 </View>
             )
       case 'Distance':
             return (
                 <View style={{flex:1,backgroundColor:'transparent',marginTop:height/12}}>
-                    <Distance title={route.title} navigator = {navigator} colors = {colors}/>
+                    <Distance title={route.title} navigator = {navigator} colors = {colors} isConnected = {this.state.isConnected}/>
                 </View>
             );
         break;
